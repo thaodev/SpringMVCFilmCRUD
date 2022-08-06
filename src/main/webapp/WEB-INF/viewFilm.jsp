@@ -1,4 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+<<<<<<< HEAD
+   pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <title>View</title>
+ </head>
+ <body>
+  
+ </body>
+=======
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -62,4 +75,5 @@
 
 	</table>
 </body>
+>>>>>>> c9bd39174ff0e83725c14b7a17d5719b1b046d62
 </html>
