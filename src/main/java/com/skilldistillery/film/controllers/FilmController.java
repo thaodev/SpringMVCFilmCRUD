@@ -42,6 +42,16 @@ public class FilmController {
 
 	}
 	
+	@RequestMapping(path="addFilm.do",
+            method=RequestMethod.GET)
+	public ModelAndView addFilm(Film film) {
+		film = dba.createFilm(film); 
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("addFilm.jsp");
+		return mv;
+
+	}
+	
 //	@RequestMapping(value = "/getuserForm", produces = "text/html", method = RequestMethod.GET)
 //	public ModelAndView returnUserForm(
 //	        @ModelAttribute("managerList") List<Manager> managerList,
