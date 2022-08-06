@@ -32,7 +32,7 @@ img {
 					<div class="col col-lg-2"></div>
 					<div class="col col-lg-2"></div>
 					<div class="col col-lg-2">
-						<form action="addFilm.do" method="GET" class="text-right">
+						<form action="addFilm.do" role="form" method="GET" class="text-right">
 							<button type="button" class="btn btn-info btn-lg "
 								data-toggle="button" aria-pressed="false" autocomplete="off">Add
 								a Film</button>
@@ -44,14 +44,14 @@ img {
 			</div>
 			<div class="col-6">
 			
-				<form action="findFilmByID.do" method="GET" class="form-inline">
+				<form action="findFilmByID.do" role="form" method="GET" class="form-inline">
 					<input type="text" id="filmId" name="filmId"
 						placeholder="Type Film Id here">
 
 					<button type="button" class="btn btn-info mb-2">Search By
 						ID</button>
 				</form>
-				<form action="findFilmByKeyword.do" method="GET" class="form-inline">
+				<form action="findFilmByKeyword.do" role="form" method="GET" class="form-inline">
 					<input type="text" name="keyword" placeholder="Type keyword here">
 					<button type="button" class="btn btn-info mb-2">Search By
 						key word</button>
