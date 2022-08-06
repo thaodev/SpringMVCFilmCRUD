@@ -24,7 +24,9 @@ public class FilmController {
 	public ModelAndView findFilmByID( int filmId) {
 		Film film = dba.findFilmById(filmId); 
 		ModelAndView mv = new ModelAndView();
+		if (film != null) {
 		mv.addObject(film);
+		}
 		mv.setViewName("viewFilm");
 		return mv;
 
