@@ -142,6 +142,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 						rs.getBigDecimal("rental_rate"), rs.getShort("length"), rs.getBigDecimal("replacement_cost"),
 						rs.getString("rating"), rs.getString("special_features"),
 						this.findActorsByFilmId(rs.getInt("id")), this.getFilmInventory(rs.getInt("film.id"))));
+				System.out.println(films.get(0));
 			}
 			return films;
 		} catch (SQLException sqle) {
