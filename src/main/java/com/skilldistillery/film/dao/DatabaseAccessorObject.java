@@ -7,337 +7,212 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
+import java.util.Set;
 
-import com.skilldistillery.filmquery.entities.Actor;
-import com.skilldistillery.filmquery.entities.Film;
-import com.skilldistillery.filmquery.entities.Inventory;
+import com.skilldistillery.film.entities.Actor;
+import com.skilldistillery.film.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
+	private final String user = "student", pass = "student";
 
-	static {
+	public DatabaseAccessorObject() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
 		}
 	}
+	
+	// CREATE
+	public Film createFilm(Film film) {
+		String sql = "INSERT INTO film (title, description,"
+//					+ "release_year,"
+					+ " language_id"
+//					+ ", rental_duration, rental_rate, length,"
+//					+ " replacement_cost, rating, special_features"
+					+ ")"
+					+ " VALUES(?, ?,"
+//					+ "?,"
+					+ "?"
+//					+ ", ?, ?, ?"
+//					+ "?, ?, ?"
+					+ ")";
+		System.out.println(sql);
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+//			stmt.setInt(3, film.getReleaseYear().getYear());
+			stmt.setInt(3, film.getLanguageId());
+//			stmt.setByte(5, film.getRentalDuration());
+//			stmt.setBigDecimal(6, film.getRentalRate());
+//			stmt.setShort(7, film.getLength());
+//			stmt.setBigDecimal(8, film.getReplacementCost());
+//			stmt.setString(9, film.getRating());
+//			stmt.setString(10, film.getSpecialFeatures());
+			System.out.println(stmt.toString());
+			stmt.executeUpdate();
+			
+//			if (updateCount == 1) {
+//				conn.commit();
+//				System.out.println("'" + film.getTitle() + "' added.");
+//				ResultSet keyList = stmt.getGeneratedKeys();
+//				film.setId(keyList.getInt(1));
+//				return film;
+//			} else {
+//				System.out.println("Error: " + updateCount + " films added.");
+//				conn.rollback();
+//			}
+		} catch (SQLException sqle1) {
+			sqle1.printStackTrace();
+			if (conn != null) {
+				try { conn.rollback(); }
+				catch (SQLException sqle2) {
+					System.out.println("Error: Unable to roll back transaction.");
+					sqle2.printStackTrace();
+				}
+			}
+//			throw new RuntimeException("Error inserting film " + film.getTitle());
+		} finally {
+			try {
+			conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+		return null;
+	}
 
+	// READ
 	@Override
 	public Film findFilmById(int filmId) {
-		Film film = null;
-		String user = "student";
-		String pass = "student";
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
+		String sql = "SELECT film.*, language.name, category.name "
+				+ "FROM film JOIN language ON film.language_id = language.id "
+				+ "JOIN film_category ON film.id = film_category.film_id "
+				+ "JOIN category ON film_category.category_id = category.id " + "WHERE film.id = ?";
 
-			// ...
-			String sql = "SELECT * FROM film WHERE id = ?";
-
-			PreparedStatement stmt;
-
-			stmt = conn.prepareStatement(sql);
-
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
+			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
-
-			ResultSet filmResult = stmt.executeQuery();
-			if (filmResult.next()) {
-				filmId = filmResult.getInt("id");
-				String title = filmResult.getString("title");
-				String desc = filmResult.getString("description");
-				short releaseYear = filmResult.getShort("release_year");
-				int langId = filmResult.getInt("language_id");
-				String language = findLanguageById(langId);
-				int rentDur = filmResult.getInt("rental_duration");
-				double rate = filmResult.getDouble("rental_rate");
-				int length = filmResult.getInt("length");
-				double repCost = filmResult.getDouble("replacement_cost");
-				String rating = filmResult.getString("rating");
-				String features = filmResult.getString("special_features");
-				film = new Film(filmId, title, desc, releaseYear, language, rentDur, rate, length, repCost, rating,
-						features);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
+						rs.getDate("release_year").toLocalDate(), rs.getShort("language_id"),
+						rs.getString("language.name"), rs.getString("category.name"), rs.getByte("rental_duration"),
+						rs.getBigDecimal("rental_rate"), rs.getShort("length"), rs.getBigDecimal("replacement_cost"),
+						rs.getString("rating"), rs.getString("special_features"),
+						this.findActorsByFilmId(rs.getInt("id")), this.getFilmInventory(filmId));
 			}
-
-			// ...
-			filmResult.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
-
-		return film;
+		return null;
 	}
 
 	@Override
+	public List<Film> findFilmByKeyword(String keyword) {
+		List<Film> films = new ArrayList<Film>();
+		String sql = "SELECT film.*, language.name, category.name "
+				+ "FROM film JOIN language ON film.language_id = language.id "
+				+ "JOIN film_category ON film.id = film_category.film_id "
+				+ "JOIN category ON film_category.category_id = category.id "
+				+ "WHERE UPPER(film.title) LIKE UPPER(?) OR UPPER(film.description) LIKE UPPER(?)";
+
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + keyword + "%");
+			stmt.setString(2, "%" + keyword + "%");
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				films.add(new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
+						rs.getDate("release_year").toLocalDate(), rs.getShort("language_id"),
+						rs.getString("language.name"), rs.getString("category.name"), rs.getByte("rental_duration"),
+						rs.getBigDecimal("rental_rate"), rs.getShort("length"), rs.getBigDecimal("replacement_cost"),
+						rs.getString("rating"), rs.getString("special_features"),
+						this.findActorsByFilmId(rs.getInt("id")), this.getFilmInventory(rs.getInt("film.id"))));
+			}
+			return films;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return null;
+	}
+
+	public Map<String, Set<Integer>> getFilmInventory(int filmId) {
+		Map<String, Set<Integer>> inventory = new HashMap<String, Set<Integer>>();
+
+		String sql = "SELECT id, media_condition FROM inventory_item WHERE film_id = ?";
+
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String condition = rs.getString("media_condition");
+				int id = rs.getInt("id");
+				if (condition == "NULL") {
+					condition = "Unknown";
+				}
+				if (inventory.get(condition) != null) {
+					inventory.get(condition).add(id);
+				} else {
+					Set<Integer> idSet = new HashSet<Integer>();
+					idSet.add(id);
+					inventory.put(condition, idSet);
+				}
+			}
+			return inventory;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+
+		return null;
+	}
+
 	public Actor findActorById(int actorId) {
-		Actor actor = null;
-		String user = "student";
-		String pass = "student";
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
+		String sql = "SELECT * FROM actor WHERE id = ?";
 
-			// ...
-			String sql = "SELECT * FROM actor WHERE id = ?";
-
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, actorId);
-
-			ResultSet actorResult = stmt.executeQuery();
-
-			if (actorResult.next()) {
-				actor = new Actor(); // Create the object
-				// Here is our mapping of query columns to our object fields:
-				actor.setId(actorResult.getInt("id"));
-				actor.setFirstName(actorResult.getString("first_name"));
-				actor.setLastName(actorResult.getString("last_name"));
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return new Actor(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"));
 			}
-			// ...
-			actorResult.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
-		return actor;
+		return null;
 	}
 
-//Implement findActorsByFilmId with an appropriate List implementation that will be populated using a ResultSet and returned.
-	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
-		List<Actor> actors = new ArrayList<>();
-		String user = "student";
-		String pass = "student";
-		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "SELECT * FROM actor JOIN film_actor ON actor.id = film_actor.actor_id "
-					+ " WHERE film_id = ?";
+		String sql = "SELECT actor.id, first_name, last_name "
+				+ "FROM film JOIN film_actor ON film.id = film_actor.film_id "
+				+ "JOIN actor ON actor.id = film_actor.actor_id " + "WHERE film.id = ?";
+		List<Actor> actors = new ArrayList<Actor>();
+
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				int actorId = rs.getInt("id");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-
-				Actor actor = new Actor(actorId, firstName, lastName);
-				actors.add(actor);
+				actors.add(this.findActorById(rs.getInt("actor.id")));
 			}
-			rs.close();
-			stmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			return actors;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
-
-		return actors;
+		return null;
 	}
-
-	public List<Film> findFilmsBySearchKeyWord(String searchWord) {
-		List<Film> films = new ArrayList<>();
-		String user = "student";
-		String pass = "student";
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ?";
-
-			PreparedStatement stmt;
-
-			stmt = conn.prepareStatement(sql);
-			searchWord = "%" + searchWord + "%";
-			stmt.setString(1, searchWord);
-			stmt.setString(2, searchWord);
-
-			ResultSet filmResult = stmt.executeQuery();
-			while (filmResult.next()) {
-				int filmId = filmResult.getInt("id");
-				String title = filmResult.getString("title");
-				String desc = filmResult.getString("description");
-				short releaseYear = filmResult.getShort("release_year");
-				int langId = filmResult.getInt("language_id");
-				String language = findLanguageById(langId);
-				int rentDur = filmResult.getInt("rental_duration");
-				double rate = filmResult.getDouble("rental_rate");
-				int length = filmResult.getInt("length");
-				double repCost = filmResult.getDouble("replacement_cost");
-				String rating = filmResult.getString("rating");
-				String features = filmResult.getString("special_features");
-				films.add(new Film(filmId, title, desc, releaseYear, language, rentDur, rate, length, repCost, rating,
-						features));
-
-			}
-			filmResult.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return films;
-
-	}
-
-	public String findCategoryByFilmId(int filmId) {
-		String category = "";
-		String user = "student";
-		String pass = "student";
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-
-			// ...
-			String sql = "SELECT name FROM category " + "JOIN film_category ON category_id = film_category.category_id"
-					+ " WHERE film_id = ?";
-
-			PreparedStatement stmt;
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, filmId);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				category = rs.getString("name");
-			}
-			rs.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return category;
-	}
-
-	public String findLanguageById(int id) {
-		String language = null;
-		String user = "student";
-		String pass = "student";
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-
-			// ...
-			String sql = "SELECT name FROM language WHERE id = ?";
-
-			PreparedStatement stmt;
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				language = rs.getString("name");
-			}
-			rs.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return language;
-	}
-
-	public List<Inventory> getFilmInventory(int filmId) {
-		List<Inventory> filmInventories = new ArrayList<>();
-		String user = "student";
-		String pass = "student";
-
-		int store_id = 0;
-
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-
-			// ...
-			String sql = "SELECT store_id, media_condition FROM inventory_item WHERE film_id = ?";
-
-			PreparedStatement stmt;
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, filmId);
-
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				int storeId = rs.getInt("store_id");
-				String condition = rs.getString("media_condition");
-				filmInventories.add(new Inventory(storeId, condition));
-			}
-			rs.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return filmInventories;
-	}
-
-	@Override
-	public Film createFilm(Scanner input) {
-		Film filmToAdd = null;
-		String user = "student";
-		String pass = "student";
-		
-		String title = getStringInput(input, "Enter film title: ");
-		String sql = "INSERT INTO film (title, language_id) VALUES (?, ?)";
-		
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			conn.setAutoCommit(false); // START TRANSACTION
-
-			 PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		      st.setString(1, title);
-		      st.setInt(2, 1);
-		      int uc = st.executeUpdate();
-		      System.out.println(uc + " film created.");
-		      // Now get the auto-generated actor ID:
-		      ResultSet keys = st.getGeneratedKeys();
-		      if (keys.next()) {
-		        System.out.println("New film ID: " + keys.getInt(1));
-		      }
-		
-		      filmToAdd = new Film();
-		      filmToAdd.setFilmId(keys.getInt(1));
-		      filmToAdd.setTitle(title);
-		      filmToAdd.setLanguage("English");
-		      conn.commit();
-		      st.close();
-		      conn.close();
-			
-		 } catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-		
-		
-		return filmToAdd;
-	}
-
-	private String getStringInput(Scanner input, String string) {
-		System.out.print(string);
-		input.nextLine();
-		String inputString = input.nextLine();
-		return inputString;
-	}
-
-	@Override
-	public boolean deleteFilm(Film film) {
-		return false;
-	}
-	
-	
 
 }
