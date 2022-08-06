@@ -17,7 +17,7 @@ public class FilmController {
 	public ModelAndView processData(Film film, int filmId) {
 		film = dba.findFilmById(filmId); 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("view.jsp");
+		mv.setViewName("view");
 		return mv;
 
 	}
