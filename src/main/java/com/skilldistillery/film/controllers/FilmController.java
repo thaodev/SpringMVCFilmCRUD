@@ -46,11 +46,11 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path="addFilm.do",
-            method=RequestMethod.GET)
+            method=RequestMethod.POST)
 	public ModelAndView addFilm(Film film) {
 		film = dba.createFilm(film); 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("addFilm");
+		mv.setViewName("success");
 		return mv;
 
 	}

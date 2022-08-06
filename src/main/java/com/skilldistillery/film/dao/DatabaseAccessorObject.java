@@ -1,5 +1,6 @@
 package com.skilldistillery.film.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,78 +31,83 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			cnfe.printStackTrace();
 		}
 	}
-	
+
 	// CREATE
-		public Film createFilm(Film film) {
-			String sql = "INSERT INTO film (title, description,"
-						+ "release_year,"
-						+ " language_id"
-						+ ", rental_duration, rental_rate, length,"
-						+ " replacement_cost, rating, special_features"
-						+ ")"
-						+ " VALUES(?, ?,"
-						+ "?,"
-						+ "?"
-						+ ", ?, ?, ?"
-						+ "?, ?, ?"
-						+ ")";
-			System.out.println(sql);
-			Connection conn = null;
-			try {
-				conn = DriverManager.getConnection(URL, user, pass);
-				conn.setAutoCommit(false);
-				
-				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				
-				stmt.setString(1, film.getTitle());
-				stmt.setString(2, film.getDescription());
-				stmt.setInt(3, film.getReleaseYear().getYear());
-				stmt.setInt(4, film.getLanguageId());
-			stmt.setByte(5, film.getRentalDuration());
-				stmt.setBigDecimal(6, film.getRentalRate());
-				stmt.setShort(7, film.getLength());
-				stmt.setBigDecimal(8, film.getReplacementCost());
-				stmt.setString(9, film.getRating());
-				stmt.setString(10, film.getSpecialFeatures());
-				System.out.println(stmt.toString());
-				stmt.executeUpdate();
-				
-				int updateCount = stmt.executeUpdate();
-			      System.out.println(updateCount + " film created.");
-			      // Now get the auto-generated actor ID:
-			      ResultSet keys = stmt.getGeneratedKeys();
-			      if (keys.next()) {
-			        System.out.println("New film ID: " + keys.getInt(1));
-			      }
-				if (updateCount == 1) {
-					conn.commit();
-					System.out.println("'" + film.getTitle() + "' added.");
-					ResultSet keyList = stmt.getGeneratedKeys();
-					film.setId(keyList.getInt(1));
-					return film;
-				} else {
-					System.out.println("Error: " + updateCount + " films added.");
-					conn.rollback();
-				}
-			} catch (SQLException sqle1) {
-				sqle1.printStackTrace();
-				if (conn != null) {
-					try { conn.rollback(); }
-					catch (SQLException sqle2) {
-						System.out.println("Error: Unable to roll back transaction.");
-						sqle2.printStackTrace();
-					}
-				}
-//				throw new RuntimeException("Error inserting film " + film.getTitle());
-			} finally {
+	public Film createFilm(Film film) {
+		String sql = "INSERT INTO film (title, description," + "release_year," + " language_id"
+				+ ", rental_duration, rental_rate, length," + " replacement_cost, rating, special_features" + ")"
+				+ " VALUES(?, ?," + "?," + "?" + ", ?, ?, ?," + "?, ?, ?" + ")";
+		System.out.println(sql);
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, film.getTitle() == null ? "" : film.getTitle());
+
+			stmt.setString(2,
+					film.getDescription().length() == 0 || film.getDescription() == null ? "" : film.getDescription());
+
+			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
+					: film.getReleaseYear().getYear());
+
+			stmt.setInt(4, film.getLanguageId());
+
+			stmt.setByte(5, film.getRentalDuration() == 0 ? (byte) 3 : film.getRentalDuration());
+
+			stmt.setBigDecimal(6, film.getRentalRate() == null ? BigDecimal.valueOf(0) : BigDecimal.valueOf(4.99));
+
+			stmt.setShort(7, film.getLength() == 0 ? Short.valueOf("0") : Short.valueOf(film.getLength()));
+
+			stmt.setBigDecimal(8, film.getReplacementCost() == null ? BigDecimal.valueOf(19.99) : film.getReplacementCost());
+			
+			stmt.setString(9, film.getRating() == null ? "G" : film.getRating() );
+			
+			stmt.setString(10, film.getSpecialFeatures() == null ? "" : film.getSpecialFeatures());
+			
+			//System.out.println(stmt.toString());
+			stmt.executeUpdate();
+
+			int updateCount = stmt.executeUpdate();
+			System.out.println(updateCount + " film created.");
+			// Now get the auto-generated actor ID:
+			ResultSet keys = stmt.getGeneratedKeys();
+			if (keys.next()) {
+				System.out.println("New film ID: " + keys.getInt(1));
+			}
+			if (updateCount == 1) {
+				conn.commit();
+				System.out.println("'" + film.getTitle() + "' added.");
+				ResultSet keyList = stmt.getGeneratedKeys();
+				film.setId(keyList.getInt(1));
+				return film;
+			} else {
+				System.out.println("Error: " + updateCount + " films added.");
+				conn.rollback();
+			}
+		} catch (SQLException sqle1) {
+			sqle1.printStackTrace();
+			if (conn != null) {
 				try {
-				conn.close();
-				} catch (SQLException sqle3) {
-					sqle3.printStackTrace();
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.out.println("Error: Unable to roll back transaction.");
+					sqle2.printStackTrace();
 				}
 			}
-			return null;
+//				throw new RuntimeException("Error inserting film " + film.getTitle());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
 		}
+		return null;
+	}
+
 	// READ
 	@Override
 	public Film findFilmById(int filmId) {

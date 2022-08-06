@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class Film {
 	private byte rentalDuration;
-	private short languageId, length;
+	private Short languageId, length;
 	private int id;
 	private BigDecimal rentalRate, replacementCost;
 	private String title, description, language, category, rating, specialFeatures;
