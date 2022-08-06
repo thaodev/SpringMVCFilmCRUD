@@ -1,5 +1,6 @@
 package com.skilldistillery.film.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class FilmController {
 	
 	@RequestMapping(path="findFilmByKeyword.do",
             method=RequestMethod.GET)
-	public ModelAndView findFilmByKeyword (String keyword,  @ModelAttribute("films") List<Film> films,
+	public ModelAndView findFilmByKeyword (String keyword,  @ModelAttribute("films") ArrayList<Film> films,
 	        Model model) {
-		films = dba.findFilmByKeyword(keyword); 
+		films = new ArrayList<>(dba.findFilmByKeyword(keyword)); 
 		ModelAndView mv = new ModelAndView();
 		 mv.getModelMap().addAttribute("films", films);
 		mv.setViewName("viewFilmList");
@@ -47,7 +48,7 @@ public class FilmController {
 	public ModelAndView addFilm(Film film) {
 		film = dba.createFilm(film); 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("addFilm.jsp");
+		mv.setViewName("addFilm");
 		return mv;
 
 	}
