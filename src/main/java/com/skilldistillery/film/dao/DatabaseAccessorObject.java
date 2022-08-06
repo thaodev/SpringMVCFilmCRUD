@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,9 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+@Component
 public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private final String user = "student", pass = "student";
