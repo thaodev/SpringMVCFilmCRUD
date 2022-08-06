@@ -56,7 +56,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				stmt.setString(1, film.getTitle());
 				stmt.setString(2, film.getDescription());
 				stmt.setInt(3, film.getReleaseYear().getYear());
-				stmt.setInt(3, film.getLanguageId());
+				stmt.setInt(4, film.getLanguageId());
 			stmt.setByte(5, film.getRentalDuration());
 				stmt.setBigDecimal(6, film.getRentalRate());
 				stmt.setShort(7, film.getLength());
