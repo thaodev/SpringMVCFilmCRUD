@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,70 +32,76 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	// CREATE
-	public Film createFilm(Film film) {
-		String sql = "INSERT INTO film (title, description,"
-//					+ "release_year,"
-					+ " language_id"
-//					+ ", rental_duration, rental_rate, length,"
-//					+ " replacement_cost, rating, special_features"
-					+ ")"
-					+ " VALUES(?, ?,"
-//					+ "?,"
-					+ "?"
-//					+ ", ?, ?, ?"
-//					+ "?, ?, ?"
-					+ ")";
-		System.out.println(sql);
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			conn.setAutoCommit(false);
-			
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			
-			stmt.setString(1, film.getTitle());
-			stmt.setString(2, film.getDescription());
-//			stmt.setInt(3, film.getReleaseYear().getYear());
-			stmt.setInt(3, film.getLanguageId());
-//			stmt.setByte(5, film.getRentalDuration());
-//			stmt.setBigDecimal(6, film.getRentalRate());
-//			stmt.setShort(7, film.getLength());
-//			stmt.setBigDecimal(8, film.getReplacementCost());
-//			stmt.setString(9, film.getRating());
-//			stmt.setString(10, film.getSpecialFeatures());
-			System.out.println(stmt.toString());
-			stmt.executeUpdate();
-			
-//			if (updateCount == 1) {
-//				conn.commit();
-//				System.out.println("'" + film.getTitle() + "' added.");
-//				ResultSet keyList = stmt.getGeneratedKeys();
-//				film.setId(keyList.getInt(1));
-//				return film;
-//			} else {
-//				System.out.println("Error: " + updateCount + " films added.");
-//				conn.rollback();
-//			}
-		} catch (SQLException sqle1) {
-			sqle1.printStackTrace();
-			if (conn != null) {
-				try { conn.rollback(); }
-				catch (SQLException sqle2) {
-					System.out.println("Error: Unable to roll back transaction.");
-					sqle2.printStackTrace();
+		public Film createFilm(Film film) {
+			String sql = "INSERT INTO film (title, description,"
+						+ "release_year,"
+						+ " language_id"
+						+ ", rental_duration, rental_rate, length,"
+						+ " replacement_cost, rating, special_features"
+						+ ")"
+						+ " VALUES(?, ?,"
+						+ "?,"
+						+ "?"
+						+ ", ?, ?, ?"
+						+ "?, ?, ?"
+						+ ")";
+			System.out.println(sql);
+			Connection conn = null;
+			try {
+				conn = DriverManager.getConnection(URL, user, pass);
+				conn.setAutoCommit(false);
+				
+				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				
+				stmt.setString(1, film.getTitle());
+				stmt.setString(2, film.getDescription());
+				stmt.setInt(3, film.getReleaseYear().getYear());
+				stmt.setInt(3, film.getLanguageId());
+			stmt.setByte(5, film.getRentalDuration());
+				stmt.setBigDecimal(6, film.getRentalRate());
+				stmt.setShort(7, film.getLength());
+				stmt.setBigDecimal(8, film.getReplacementCost());
+				stmt.setString(9, film.getRating());
+				stmt.setString(10, film.getSpecialFeatures());
+				System.out.println(stmt.toString());
+				stmt.executeUpdate();
+				
+				int updateCount = stmt.executeUpdate();
+			      System.out.println(updateCount + " film created.");
+			      // Now get the auto-generated actor ID:
+			      ResultSet keys = stmt.getGeneratedKeys();
+			      if (keys.next()) {
+			        System.out.println("New film ID: " + keys.getInt(1));
+			      }
+				if (updateCount == 1) {
+					conn.commit();
+					System.out.println("'" + film.getTitle() + "' added.");
+					ResultSet keyList = stmt.getGeneratedKeys();
+					film.setId(keyList.getInt(1));
+					return film;
+				} else {
+					System.out.println("Error: " + updateCount + " films added.");
+					conn.rollback();
+				}
+			} catch (SQLException sqle1) {
+				sqle1.printStackTrace();
+				if (conn != null) {
+					try { conn.rollback(); }
+					catch (SQLException sqle2) {
+						System.out.println("Error: Unable to roll back transaction.");
+						sqle2.printStackTrace();
+					}
+				}
+//				throw new RuntimeException("Error inserting film " + film.getTitle());
+			} finally {
+				try {
+				conn.close();
+				} catch (SQLException sqle3) {
+					sqle3.printStackTrace();
 				}
 			}
-//			throw new RuntimeException("Error inserting film " + film.getTitle());
-		} finally {
-			try {
-			conn.close();
-			} catch (SQLException sqle3) {
-				sqle3.printStackTrace();
-			}
+			return null;
 		}
-		return null;
-	}
-
 	// READ
 	@Override
 	public Film findFilmById(int filmId) {
