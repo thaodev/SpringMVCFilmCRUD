@@ -305,6 +305,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			sqle.printStackTrace();
 		} finally {
 			try {
+				conn.commit();
 				conn.close();
 			} catch (SQLException sqle2) {
 				sqle2.printStackTrace();
