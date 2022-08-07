@@ -129,7 +129,7 @@ required
 					<option value="NC17">NC17</option>
 				</select>
 			</div>
-			<div class="form-group">
+			<!-- x<div class="form-group">
 				<label for="feature">Special Features</label> <select
 					class="form-select" name="specialFeatures" id="feature"
 					aria-label="Default select example">
@@ -139,11 +139,37 @@ required
 					<option value="Deleted Scences">Deleted Scenes</option>
 					<option value="Behind the Scenes">Behind the Scenes</option>
 				</select>
-			</div>
+			</div> -->
 
+			<div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="Trailers"
+						id="flexCheckDefault"> <label class="form-check-label"
+						for="flexCheckDefault"> Trailers </label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Commentaries" id="flexCheck2" checked> <label
+						class="form-check-label" for="flexCheck2"> Commentaries </label>
+				</div>
 
-			<div class="text-center mt-3">
-				<button type="submit" class="btn btn-primary">Add Film</button>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Deleted Scences" id="flexCheck3" checked> <label
+						class="form-check-label" for="flexCheck3"> Deleted Scences
+					</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Deleted Scences" id="flexCheck4" checked> <label
+						class="form-check-label" for="flexCheck4"> Behind the Scenes
+					</label>
+				</div>
+
+				<div class="text-center mt-3">
+					<button type="submit" class="btn btn-primary">Add Film</button>
+				</div>
 			</div>
 		</form>
 

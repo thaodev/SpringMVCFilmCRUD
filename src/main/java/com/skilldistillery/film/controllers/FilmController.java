@@ -100,9 +100,9 @@ public class FilmController {
 	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		System.out.println("in update film");
-		Film updatedFilm = dba.findFilmById(film.getId());
-		boolean result = dba.updateFilm(film);
 		
+		boolean result = dba.updateFilm(film);
+		Film updatedFilm = dba.findFilmById(film.getId());
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("updateResult", result);
 		redir.addFlashAttribute("film", updatedFilm);
