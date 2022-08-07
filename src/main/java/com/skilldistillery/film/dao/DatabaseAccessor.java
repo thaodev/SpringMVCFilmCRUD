@@ -16,5 +16,6 @@ public interface DatabaseAccessor {
 	public Map<String, Set<Integer>> getFilmInventory(int filmId);
 	public Actor findActorById(int actorId);
 	public List<Actor> findActorsByFilmId(int filmId);
+	public boolean updateFilm(Film film);
 	public boolean deleteFilmById(int filmId);
 }

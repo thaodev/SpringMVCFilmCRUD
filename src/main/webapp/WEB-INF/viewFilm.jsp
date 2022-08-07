@@ -19,7 +19,7 @@
 				<input type="hidden" name="filmId" value="<c:out value="${film.id }"/>"/>
 				<button type="submit" class="btn btn-info mb-2">Delete</button>
 			</form>
-			<form action="updateFilm.do" method="GET">
+			<form action="presentFilmForUpdate.do" method="GET">
 				<input type="hidden" name="filmId" value="<c:out value="${film.id }"/>"/>
 				<button type="submit" class="btn btn-info mb-2">Update</button>
 			</form>

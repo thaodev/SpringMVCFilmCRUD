@@ -6,12 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>AddFilm</title>
+<!-- 
 <style>
 .form-group
 ,
 required
 </style>
-
+-->
 
 <!-- CSS only -->
 <link
@@ -46,7 +47,7 @@ required
 		<div class="text-center">
 			<h1>UPDATE FILM</h1>
 		</div>
-		<form action="addFilm.do" method="POST">
+		<form action="updateFilm.do" method="POST">
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
 					class="form-control" name="title" id="desc" required
@@ -63,7 +64,7 @@ required
 					aria-describedby="Release Year"
 					placeholder="Enter film release year" value="<c:out value="${film.releaseYear }"/>">
 			</div>
-			<div class="form-group">
+		<!--  <div class="form-group">
 				<label for="lang">Language*</label> <select class="form-select"
 					name="languageId" required id="lang"
 					aria-label="Default select example">
@@ -76,31 +77,31 @@ required
 					<option <c:if test="${film.language == 'German' }">selected</c:if> value="6">German</option>
 				</select>
 			</div>
-
+-->
 			<div class="form-group">
 				<label for="lang">Category</label> <select class="form-select"
-					id="lang" aria-label="Default select example">
+					id="lang" name="category" aria-label="Default select example">
 					<option selected>Select film category</option>
-					<option <c:if test="${film.category == 'Action' }">selected</c:if> value="1">Action</option>
-					<option <c:if test="${film.category == 'Animation' }">selected</c:if> value="2">Animation</option>
-					<option <c:if test="${film.category == 'Children' }">selected</c:if> value="3">Children</option>
-					<option <c:if test="${film.category == 'Classics' }">selected</c:if> value="4">Classics</option>
-					<option <c:if test="${film.category == 'Comedy' }">selected</c:if> value="5">Comedy</option>
-					<option <c:if test="${film.category == 'Documentary' }">selected</c:if> value="6">Documentary</option>
-					<option <c:if test="${film.category == 'Drama' }">selected</c:if> value="7">Drama</option>
-					<option <c:if test="${film.category == 'Family' }">selected</c:if> value="8">Family</option>
-					<option <c:if test="${film.category == 'Foreign' }">selected</c:if> value="9">Foreign</option>
-					<option <c:if test="${film.category == 'Games' }">selected</c:if> value="10">Games</option>
-					<option <c:if test="${film.category == 'Horror' }">selected</c:if> value="11">Horror</option>
-					<option <c:if test="${film.category == 'Music' }">selected</c:if> value="12">Music</option>
-					<option <c:if test="${film.category == 'New' }">selected</c:if> value="13">New</option>
-					<option <c:if test="${film.category == 'Sci-Fi' }">selected</c:if> value="14">Sci-Fi</option>
-					<option <c:if test="${film.category == 'Sport' }">selected</c:if> value="15">Sport</option>
+					<option <c:if test="${film.category == 'Action' }">selected</c:if> value="Action">Action</option>
+					<option <c:if test="${film.category == 'Animation' }">selected</c:if> value="Animation">Animation</option>
+					<option <c:if test="${film.category == 'Children' }">selected</c:if> value="Children">Children</option>
+					<option <c:if test="${film.category == 'Classics' }">selected</c:if> value="Classics">Classics</option>
+					<option <c:if test="${film.category == 'Comedy' }">selected</c:if> value="Comedy">Comedy</option>
+					<option <c:if test="${film.category == 'Documentary' }">selected</c:if> value="Documentary">Documentary</option>
+					<option <c:if test="${film.category == 'Drama' }">selected</c:if> value="Drama">Drama</option>
+					<option <c:if test="${film.category == 'Family' }">selected</c:if> value="Family">Family</option>
+					<option <c:if test="${film.category == 'Foreign' }">selected</c:if> value="Foreign">Foreign</option>
+					<option <c:if test="${film.category == 'Games' }">selected</c:if> value="Games">Games</option>
+					<option <c:if test="${film.category == 'Horror' }">selected</c:if> value="Horror">Horror</option>
+					<option <c:if test="${film.category == 'Music' }">selected</c:if> value="Music">Music</option>
+					<option <c:if test="${film.category == 'New' }">selected</c:if> value="New">New</option>
+					<option <c:if test="${film.category == 'Sci-Fi' }">selected</c:if> value="Sci-Fi">Sci-Fi</option>
+					<option <c:if test="${film.category == 'Sport' }">selected</c:if> value="Sport">Sport</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label for="rental">Rental Duration</label> <input type="text"
-					class="form-control" id="rental" aria-describedby="Rental Duration"
+					class="form-control" id="rental" name="rentalDuration" aria-describedby="Rental Duration"
 					placeholder="3" value="<c:out value="${film.rentalDuration }"/>">
 			</div>
 			<div class="form-group">

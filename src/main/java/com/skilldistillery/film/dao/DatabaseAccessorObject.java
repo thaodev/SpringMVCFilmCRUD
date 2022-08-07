@@ -242,6 +242,72 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return null;
 	}
 	
+	// UPDATE
+	public boolean updateFilm(Film film) {
+		String sql = "UPDATE film"
+					+ "SET title = ?, "
+						+ "description = ?, "
+						+ "release_year = ?, "
+						+ "language_id = ?,"
+						+ "rental_duration = ?, "
+						+ "rental_rate = ?, "
+						+ "length = ?, "
+						+ "replacement_cost = ?, "
+						+ "rating = ?, "
+						+ "special_features = ? "
+					+ "WHERE id = ?";
+		System.out.println(sql);
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, film.getTitle() == null ? "" : film.getTitle());
+
+			stmt.setString(2,
+					film.getDescription().length() == 0 || film.getDescription() == null ? "" : film.getDescription());
+
+			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
+					: film.getReleaseYear().getYear());
+
+			stmt.setInt(4, film.getLanguageId());
+
+			stmt.setByte(5, film.getRentalDuration() == 0 ? (byte) 3 : film.getRentalDuration());
+
+			stmt.setBigDecimal(6, film.getRentalRate() == null ? BigDecimal.valueOf(0) : BigDecimal.valueOf(4.99));
+
+			stmt.setShort(7, film.getLength() == 0 ? Short.valueOf("0") : Short.valueOf(film.getLength()));
+
+			stmt.setBigDecimal(8,
+					film.getReplacementCost() == null ? BigDecimal.valueOf(19.99) : film.getReplacementCost());
+
+			stmt.setString(9, film.getRating() == null || film.getRating().length() == 0 ? "G" : film.getRating());
+			System.out.println(film.getRating());
+
+			stmt.setString(10, film.getSpecialFeatures() == null || film.getSpecialFeatures().length() == 0 ? ""
+					: film.getSpecialFeatures());
+			
+			stmt.setInt(11, film.getId());
+
+			int updateCount = stmt.executeUpdate();
+			System.out.println(updateCount + " film created.");
+			
+			return true;
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
 	// DELETE
 	public boolean deleteFilmById(int filmId) {
 		String sql = "DELETE FROM film WHERE id = ?";

@@ -91,11 +91,11 @@ public class FilmController {
 	@RequestMapping(path = "filmDeleted.do", method = RequestMethod.GET)
 	public ModelAndView filmDeleted(){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("result2");
+		mv.setViewName("deletionResult");
 		return mv;
 	}
 	
-	@RequestMapping(path = "updateFilm.do", method = RequestMethod.GET)
+	@RequestMapping(path = "presentFilmForUpdate.do", method = RequestMethod.GET)
 	public ModelAndView updateFilm(int filmId) {
 		Film film = dba.findFilmById(filmId);
 		ModelAndView mv = new ModelAndView();
@@ -103,6 +103,24 @@ public class FilmController {
 			mv.addObject(film);
 		}
 		mv.setViewName("updateFilm");
+		return mv;
+	}
+	
+	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
+	public ModelAndView updateFilm(Film film) {
+		System.out.println("in update film");
+		boolean result = dba.updateFilm(film);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("result", result);
+		mv.setViewName("redirect:filmUpdated.do");
+		return mv;
+	}
+	
+	@RequestMapping(path = "filmUpdated.do", method = RequestMethod.GET)
+	public ModelAndView filmUpdated(){
+		System.out.println("in film updated");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("updateResult");
 		return mv;
 	}
 
