@@ -6,13 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>AddFilm</title>
-<!-- 
+
 <style>
 .form-group
 ,
 required
 </style>
--->
 
 <!-- CSS only -->
 <link
@@ -64,7 +63,7 @@ required
 					aria-describedby="Release Year"
 					placeholder="Enter film release year" value="<c:out value="${film.releaseYear }"/>">
 			</div>
-		<!--  <div class="form-group">
+			 <div class="form-group">
 				<label for="lang">Language*</label> <select class="form-select"
 					name="languageId" required id="lang"
 					aria-label="Default select example">
@@ -77,7 +76,7 @@ required
 					<option <c:if test="${film.language == 'German' }">selected</c:if> value="6">German</option>
 				</select>
 			</div>
--->
+
 			<div class="form-group">
 				<label for="lang">Category</label> <select class="form-select"
 					id="lang" name="category" aria-label="Default select example">
