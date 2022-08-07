@@ -47,35 +47,46 @@ required
 			<h1>UPDATE FILM</h1>
 		</div>
 		<form action="updateFilm.do" method="POST">
-		<input type = "hidden" name = "id" value = "<c:out value= "${film.id }"/>"/>
-		
+			<input type="hidden" name="id" value="<c:out value= "${film.id }"/>" />
+
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
 					class="form-control" name="title" id="desc" required
-					aria-describedby="description" placeholder="Enter film title" value="<c:out value="${film.title }"/>">
+					aria-describedby="description" placeholder="Enter film title"
+					value="<c:out value="${film.title }"/>">
 			</div>
 			<div class="form-group">
 				<label for="desc">Description</label> <input type="text"
 					class="form-control" name="description" id="desc"
-					aria-describedby="description" placeholder="Enter film description" value="<c:out value="${film.description }"/>">
+					aria-describedby="description" placeholder="Enter film description"
+					value="<c:out value="${film.description }"/>">
 			</div>
 			<div class="form-group">
 				<label for="year">Release Year</label> <input type="number"
 					class="form-control" name="releaseYear" id="year"
 					aria-describedby="Release Year"
-					placeholder="Enter film release year" value="<c:out value="${film.releaseYear }"/>">
+					placeholder="Enter film release year"
+					value="<c:out value="${film.releaseYear }"/>">
 			</div>
-			 <div class="form-group">
+			<div class="form-group">
 				<label for="lang">Language*</label> <select class="form-select"
 					name="languageId" required id="lang"
 					aria-label="Default select example">
 					<option selected>Select film language</option>
-					<option <c:if test="${film.language == 'English' }">selected</c:if> value="1">English</option>
-					<option <c:if test="${film.language == 'Italian' }">selected</c:if> value="2">Italian</option>
-					<option <c:if test="${film.language == 'Japanese' }">selected</c:if> value="3">Japanese</option>
-					<option <c:if test="${film.language == 'Mandarin' }">selected</c:if> value="4">Mandarin</option>
-					<option <c:if test="${film.language == 'French' }">selected</c:if> value="5">French</option>
-					<option <c:if test="${film.language == 'German' }">selected</c:if> value="6">German</option>
+					<option <c:if test="${film.language == 'English' }">selected</c:if>
+						value="1">English</option>
+					<option <c:if test="${film.language == 'Italian' }">selected</c:if>
+						value="2">Italian</option>
+					<option
+						<c:if test="${film.language == 'Japanese' }">selected</c:if>
+						value="3">Japanese</option>
+					<option
+						<c:if test="${film.language == 'Mandarin' }">selected</c:if>
+						value="4">Mandarin</option>
+					<option <c:if test="${film.language == 'French' }">selected</c:if>
+						value="5">French</option>
+					<option <c:if test="${film.language == 'German' }">selected</c:if>
+						value="6">German</option>
 				</select>
 			</div>
 
@@ -83,32 +94,53 @@ required
 				<label for="lang">Category</label> <select class="form-select"
 					id="lang" name="category" aria-label="Default select example">
 					<option selected>Select film category</option>
-					<option <c:if test="${film.category == 'Action' }">selected</c:if> value="Action">Action</option>
-					<option <c:if test="${film.category == 'Animation' }">selected</c:if> value="Animation">Animation</option>
-					<option <c:if test="${film.category == 'Children' }">selected</c:if> value="Children">Children</option>
-					<option <c:if test="${film.category == 'Classics' }">selected</c:if> value="Classics">Classics</option>
-					<option <c:if test="${film.category == 'Comedy' }">selected</c:if> value="Comedy">Comedy</option>
-					<option <c:if test="${film.category == 'Documentary' }">selected</c:if> value="Documentary">Documentary</option>
-					<option <c:if test="${film.category == 'Drama' }">selected</c:if> value="Drama">Drama</option>
-					<option <c:if test="${film.category == 'Family' }">selected</c:if> value="Family">Family</option>
-					<option <c:if test="${film.category == 'Foreign' }">selected</c:if> value="Foreign">Foreign</option>
-					<option <c:if test="${film.category == 'Games' }">selected</c:if> value="Games">Games</option>
-					<option <c:if test="${film.category == 'Horror' }">selected</c:if> value="Horror">Horror</option>
-					<option <c:if test="${film.category == 'Music' }">selected</c:if> value="Music">Music</option>
-					<option <c:if test="${film.category == 'New' }">selected</c:if> value="New">New</option>
-					<option <c:if test="${film.category == 'Sci-Fi' }">selected</c:if> value="Sci-Fi">Sci-Fi</option>
-					<option <c:if test="${film.category == 'Sport' }">selected</c:if> value="Sport">Sport</option>
+					<option <c:if test="${film.category == 'Action' }">selected</c:if>
+						value="Action">Action</option>
+					<option
+						<c:if test="${film.category == 'Animation' }">selected</c:if>
+						value="Animation">Animation</option>
+					<option
+						<c:if test="${film.category == 'Children' }">selected</c:if>
+						value="Children">Children</option>
+					<option
+						<c:if test="${film.category == 'Classics' }">selected</c:if>
+						value="Classics">Classics</option>
+					<option <c:if test="${film.category == 'Comedy' }">selected</c:if>
+						value="Comedy">Comedy</option>
+					<option
+						<c:if test="${film.category == 'Documentary' }">selected</c:if>
+						value="Documentary">Documentary</option>
+					<option <c:if test="${film.category == 'Drama' }">selected</c:if>
+						value="Drama">Drama</option>
+					<option <c:if test="${film.category == 'Family' }">selected</c:if>
+						value="Family">Family</option>
+					<option <c:if test="${film.category == 'Foreign' }">selected</c:if>
+						value="Foreign">Foreign</option>
+					<option <c:if test="${film.category == 'Games' }">selected</c:if>
+						value="Games">Games</option>
+					<option <c:if test="${film.category == 'Horror' }">selected</c:if>
+						value="Horror">Horror</option>
+					<option <c:if test="${film.category == 'Music' }">selected</c:if>
+						value="Music">Music</option>
+					<option <c:if test="${film.category == 'New' }">selected</c:if>
+						value="New">New</option>
+					<option <c:if test="${film.category == 'Sci-Fi' }">selected</c:if>
+						value="Sci-Fi">Sci-Fi</option>
+					<option <c:if test="${film.category == 'Sport' }">selected</c:if>
+						value="Sport">Sport</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label for="rental">Rental Duration</label> <input type="text"
-					class="form-control" id="rental" name="rentalDuration" aria-describedby="Rental Duration"
-					placeholder="3" value="<c:out value="${film.rentalDuration }"/>">
+					class="form-control" id="rental" name="rentalDuration"
+					aria-describedby="Rental Duration" placeholder="3"
+					value="<c:out value="${film.rentalDuration }"/>">
 			</div>
 			<div class="form-group">
 				<label for="rental rate">Rental Rate*</label> <input type="number"
 					required class="form-control" name="rentalRate" id="rental rate"
-					step=0.01 placeholder="$4.99" value="<c:out value="${film.rentalRate }"/>">
+					step=0.01 placeholder="$4.99"
+					value="<c:out value="${film.rentalRate }"/>">
 			</div>
 			<div class="form-group">
 				<label for="length">Length*</label> <input type="number" required
@@ -118,17 +150,23 @@ required
 			<div class="form-group">
 				<label for="repcost">Replacement Cost</label> <input type="number"
 					class="form-control" name="replacementCost" id="repcost"
-					placeholder="$19.99" value="<c:out value="${film.replacementCost }"/>">
+					placeholder="$19.99"
+					value="<c:out value="${film.replacementCost }"/>">
 			</div>
 			<div class="form-group">
 				<label for="rate">Rating</label> <select class="form-select"
 					name="rating" id="rate" aria-label="Default select example">
 					<option selected></option>
-					<option <c:if test="${film.rating == 'G' }">selected</c:if> value="G">G</option>
-					<option <c:if test="${film.rating == 'PG' }">selected</c:if> value="PG">PG</option>
-					<option <c:if test="${film.rating == 'PG13' }">selected</c:if> value="PG13">PG13</option>
-					<option <c:if test="${film.rating == 'R' }">selected</c:if> value="R">R</option>
-					<option <c:if test="${film.rating == 'NC17' }">selected</c:if> value="NC17">NC17</option>
+					<option <c:if test="${film.rating == 'G' }">selected</c:if>
+						value="G">G</option>
+					<option <c:if test="${film.rating == 'PG' }">selected</c:if>
+						value="PG">PG</option>
+					<option <c:if test="${film.rating == 'PG13' }">selected</c:if>
+						value="PG13">PG13</option>
+					<option <c:if test="${film.rating == 'R' }">selected</c:if>
+						value="R">R</option>
+					<option <c:if test="${film.rating == 'NC17' }">selected</c:if>
+						value="NC17">NC17</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -136,10 +174,18 @@ required
 					class="form-select" name="specialFeatures" id="feature"
 					aria-label="Default select example">
 					<option selected></option>
-					<option <c:if test="${film.specialFeatures == 'Trailers' }">selected</c:if> value="Trailers">Trailers</option>
-					<option <c:if test="${film.specialFeatures == 'Commentaries' }">selected</c:if> value="Commentaries">Commentaries</option>
-					<option <c:if test="${film.specialFeatures == 'Deleted Scenes' }">selected</c:if> value="Deleted Scences">Deleted Scenes</option>
-					<option <c:if test="${film.specialFeatures == 'Behind the Scenes' }">selected</c:if> value="Behind the Scenes">Behind the Scenes</option>
+					<option
+						<c:if test="${film.specialFeatures == 'Trailers' }">selected</c:if>
+						value="Trailers">Trailers</option>
+					<option
+						<c:if test="${film.specialFeatures == 'Commentaries' }">selected</c:if>
+						value="Commentaries">Commentaries</option>
+					<option
+						<c:if test="${film.specialFeatures == 'Deleted Scenes' }">selected</c:if>
+						value="Deleted Scences">Deleted Scenes</option>
+					<option
+						<c:if test="${film.specialFeatures == 'Behind the Scenes' }">selected</c:if>
+						value="Behind the Scenes">Behind the Scenes</option>
 				</select>
 			</div>
 
@@ -150,24 +196,24 @@ required
 		</form>
 
 	</div>
-	
+
 	<div>
-	
+
 		<c:choose>
-		<c:when test="${empty updateResult}">
-			
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="${updateResult = true }">
-					<p>Film successfully updated</p>
-				</c:when>
-				<c:otherwise>
-					<p>Update unsuccessful</p>
-				</c:otherwise>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
+			<c:when test="${empty updateResult}">
+
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${updateResult = true }">
+						<p>Film successfully updated</p>
+					</c:when>
+					<c:otherwise>
+						<p>Update unsuccessful</p>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 
