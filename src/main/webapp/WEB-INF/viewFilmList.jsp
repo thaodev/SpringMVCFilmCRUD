@@ -8,7 +8,7 @@
 <title>View</title>
 </head>
 <body>
-<c:if test="${empty films }">hello</c:if>
+<c:if test="${empty films }">No films found</c:if>
 	<c:forEach var="film" items="${ films}">
 		<table>
 			<tr>

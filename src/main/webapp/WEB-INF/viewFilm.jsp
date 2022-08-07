@@ -9,6 +9,7 @@
 <title>View</title>
 </head>
 <body>
+
 	<c:choose>
 		<c:when test="${empty film }">
 			<p>Film Not Found</p>
