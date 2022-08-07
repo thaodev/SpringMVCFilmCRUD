@@ -34,6 +34,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	// CREATE
 	public Film createFilm(Film film) {
+		Film filmAdded = film;
 		String sql = "INSERT INTO film (title, description," + "release_year," + " language_id"
 				+ ", rental_duration, rental_rate, length," + " replacement_cost, rating, special_features" + ")"
 				+ " VALUES(?, ?," + "?," + "?" + ", ?, ?, ?," + "?, ?, ?" + ")";
@@ -61,28 +62,34 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			stmt.setShort(7, film.getLength() == 0 ? Short.valueOf("0") : Short.valueOf(film.getLength()));
 
-			stmt.setBigDecimal(8, film.getReplacementCost() == null ? BigDecimal.valueOf(19.99) : film.getReplacementCost());
-			
-			stmt.setString(9, film.getRating() == null ? "G" : film.getRating() );
-			
-			stmt.setString(10, film.getSpecialFeatures() == null ? "" : film.getSpecialFeatures());
-			
-			//System.out.println(stmt.toString());
-			stmt.executeUpdate();
+			stmt.setBigDecimal(8,
+					film.getReplacementCost() == null ? BigDecimal.valueOf(19.99) : film.getReplacementCost());
+
+			stmt.setString(9, film.getRating() == null || film.getRating().length() == 0 ? "G" : film.getRating());
+			System.out.println(film.getRating());
+
+			stmt.setString(10, film.getSpecialFeatures() == null || film.getSpecialFeatures().length() == 0 ? ""
+					: film.getSpecialFeatures());
+			System.out.println(film.getSpecialFeatures());
+
+			// System.out.println(stmt.toString());
+//			stmt.executeUpdate();
 
 			int updateCount = stmt.executeUpdate();
 			System.out.println(updateCount + " film created.");
 			// Now get the auto-generated actor ID:
-			ResultSet keys = stmt.getGeneratedKeys();
-			if (keys.next()) {
-				System.out.println("New film ID: " + keys.getInt(1));
-			}
+			
+			
 			if (updateCount == 1) {
+				ResultSet keys = stmt.getGeneratedKeys();
+				if (keys.next()) {
+					System.out.println("New film ID: " + keys.getInt(1));
+				}
+//				ResultSet keyList = stmt.getGeneratedKeys();
+				filmAdded.setId(keys.getInt(1));
 				conn.commit();
-				System.out.println("'" + film.getTitle() + "' added.");
-				ResultSet keyList = stmt.getGeneratedKeys();
-				film.setId(keyList.getInt(1));
-				return film;
+				System.out.println("" + filmAdded.getTitle() + "' added.");
+				return filmAdded;
 			} else {
 				System.out.println("Error: " + updateCount + " films added.");
 				conn.rollback();
@@ -105,7 +112,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				sqle3.printStackTrace();
 			}
 		}
-		return null;
+		return filmAdded;
 	}
 
 	// READ

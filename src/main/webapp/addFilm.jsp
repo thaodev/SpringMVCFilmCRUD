@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <title>AddFilm</title>
 <style>
-	.form-group ,required
+.form-group
+,
+required
 </style>
 
 
@@ -22,9 +24,28 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="index.html">Movie Library</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="index.html">Home</a></li>
 
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<div class="container-fluid">
-		<div class="text-center"><h1>ADD A FILM INTO DATABASE</h1></div>
+		<div class="text-center">
+			<h1>ADD A FILM INTO DATABASE</h1>
+		</div>
 		<form action="addFilm.do" method="POST">
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
@@ -43,8 +64,9 @@
 					placeholder="Enter film release year">
 			</div>
 			<div class="form-group">
-				<label for="lang">Language*</label> <select class="form-select" name="languageId" required
-					id="lang" aria-label="Default select example">
+				<label for="lang">Language*</label> <select class="form-select"
+					name="languageId" required id="lang"
+					aria-label="Default select example">
 					<option selected>Select film language</option>
 					<option value="1">English</option>
 					<option value="2">Italian</option>
@@ -78,13 +100,13 @@
 			</div>
 			<div class="form-group">
 				<label for="rental">Rental Duration</label> <input type="text"
-					class="form-control" id="rental" aria-describedby="Rental Duration" 
+					class="form-control" id="rental" aria-describedby="Rental Duration"
 					placeholder="3">
 			</div>
 			<div class="form-group">
-				<label for="rental rate">Rental Rate*</label> <input type="number" required
-					class="form-control" name="rentalRate" id="rental rate" step = 0.01
-					placeholder="$4.99">
+				<label for="rental rate">Rental Rate*</label> <input type="number"
+					required class="form-control" name="rentalRate" id="rental rate"
+					step=0.01 placeholder="$4.99">
 			</div>
 			<div class="form-group">
 				<label for="length">Length*</label> <input type="number" required
@@ -97,9 +119,9 @@
 					placeholder="$19.99">
 			</div>
 			<div class="form-group">
-				<label for="rate">Rating</label> <select class="form-select" name="rating"
-					id="rate" aria-label="Default select example">
-					<option selected>Select the Rating</option>
+				<label for="rate">Rating</label> <select class="form-select"
+					name="rating" id="rate" aria-label="Default select example">
+					<option selected></option>
 					<option value="G">G</option>
 					<option value="PG">PG</option>
 					<option value="PG13">PG13</option>
@@ -108,9 +130,10 @@
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="feature">Special Features</label> <select class="form-select" name="specialFeatures"
-					id="feature" aria-label="Default select example">
-					<option selected>Select special features</option>
+				<label for="feature">Special Features</label> <select
+					class="form-select" name="specialFeatures" id="feature"
+					aria-label="Default select example">
+					<option selected></option>
 					<option value="Trailers">Trailers</option>
 					<option value="Commentaries">Commentaries</option>
 					<option value="Deleted Scences">Deleted Scenes</option>
@@ -119,8 +142,8 @@
 			</div>
 
 
-		<div class= "text-center mt-3">
-			<button type="submit" class="btn btn-primary">Add Film</button>
+			<div class="text-center mt-3">
+				<button type="submit" class="btn btn-primary">Add Film</button>
 			</div>
 		</form>
 
