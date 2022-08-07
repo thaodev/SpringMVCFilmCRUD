@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -169,25 +170,38 @@ required
 						value="NC17">NC17</option>
 				</select>
 			</div>
-			<div class="form-group">
-				<label for="feature">Special Features</label> <select
-					class="form-select" name="specialFeatures" id="feature"
-					aria-label="Default select example">
-					<option selected></option>
-					<option
-						<c:if test="${film.specialFeatures == 'Trailers' }">selected</c:if>
-						value="Trailers">Trailers</option>
-					<option
-						<c:if test="${film.specialFeatures == 'Commentaries' }">selected</c:if>
-						value="Commentaries">Commentaries</option>
-					<option
-						<c:if test="${film.specialFeatures == 'Deleted Scenes' }">selected</c:if>
-						value="Deleted Scences">Deleted Scenes</option>
-					<option
-						<c:if test="${film.specialFeatures == 'Behind the Scenes' }">selected</c:if>
-						value="Behind the Scenes">Behind the Scenes</option>
-				</select>
+			<div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="Trailers"
+						id="flexCheckDefault" name="specialFeatures"
+						<c:if test="${fn:contains(film.specialFeatures, 'Trailers')}">checked</c:if>><label class="form-check-label"
+						for="flexCheckDefault"> Trailers </label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Commentaries" id="flexCheck2" <c:if test="${fn:contains(film.specialFeatures, 'Commentaries')}">checked</c:if>> <label
+						class="form-check-label" for="flexCheck2"> Commentaries </label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Deleted Scences" id="flexCheck3" <c:if test="${fn:contains(film.specialFeatures, 'Deleted Scenes')}">checked</c:if>> <label
+						class="form-check-label" for="flexCheck3"> Deleted Scenes
+					</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox"
+						value="Deleted Scences" id="flexCheck4" <c:if test="${fn:contains(film.specialFeatures, 'Behind the Scenes')}">checked</c:if>> <label
+						class="form-check-label" for="flexCheck4"> Behind the Scenes
+					</label>
+				</div>
+
+				<div class="text-center mt-3">
+					<button type="submit" class="btn btn-primary">Add Film</button>
+				</div>
 			</div>
+
 
 
 			<div class="text-center mt-3">

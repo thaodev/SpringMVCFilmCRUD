@@ -1,5 +1,7 @@
 package com.skilldistillery.film.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +108,6 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("updateResult", result);
 		redir.addFlashAttribute("film", updatedFilm);
-		
 		mv.setViewName("redirect:filmUpdated.do");
 		return mv;
 	}
