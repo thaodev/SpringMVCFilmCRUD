@@ -15,7 +15,10 @@
 			<p>Film Not Found</p>
 		</c:when>
 		<c:otherwise>
-
+			<form action="deleteFilm.do" method="POST">
+				<input type="hidden" name="filmId" value="<c:out value="${film.id }"/>"/>
+				<button type="submit" class="btn btn-info mb-2">Delete</button>
+			</form>
 			<table>
 				<tr>
 					<th><strong><em>${film.title }</em></strong></th>

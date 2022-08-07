@@ -81,5 +81,21 @@ public class FilmController {
 //	    mnv.getModelMap().addAttribute("managerList", managerList);
 //	    return mnv;
 //	}
+	
+	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(int filmId) {
+		boolean result = dba.deleteFilmById(filmId);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("result", result);
+		mv.setViewName("redirect:filmDeleted.do");
+		return mv;
+	}
+	
+	@RequestMapping(path = "filmDeleted.do", method = RequestMethod.GET)
+	public ModelAndView filmDeleted(){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("result2");
+		return mv;
+	}
 
 }

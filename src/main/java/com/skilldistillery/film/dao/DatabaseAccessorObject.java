@@ -237,5 +237,26 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return null;
 	}
+	
+	// DELETE
+	public boolean deleteFilmById(int filmId) {
+		String sql = "DELETE FROM film WHERE id = ?";
+		
+		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			
+			int numRowsDeleted = 0;
+			numRowsDeleted = stmt.executeUpdate();
+			if (numRowsDeleted > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return false;
+	}
 
 }
