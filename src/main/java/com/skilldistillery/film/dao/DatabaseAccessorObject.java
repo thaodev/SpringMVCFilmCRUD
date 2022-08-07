@@ -246,7 +246,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	
 	// UPDATE
 	public boolean updateFilm(Film film) {
-		String sql = "UPDATE film"
+		String sql = "UPDATE film "
 					+ "SET title = ?, "
 						+ "description = ?, "
 						+ "release_year = ?, "
@@ -296,6 +296,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setInt(11, film.getId());
 
 			int updateCount = stmt.executeUpdate();
+			System.out.println(stmt);
 			System.out.println(updateCount + " film updated.");
 			
 			return true;

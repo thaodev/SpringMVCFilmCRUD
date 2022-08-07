@@ -47,6 +47,8 @@ required
 			<h1>UPDATE FILM</h1>
 		</div>
 		<form action="updateFilm.do" method="POST">
+		<input type = "hidden" name = "id" value = "<c:out value= "${film.id }"/>"/>
+		
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
 					class="form-control" name="title" id="desc" required
