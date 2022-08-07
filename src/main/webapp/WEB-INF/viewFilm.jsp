@@ -30,11 +30,11 @@
 				</tr>
 				<tr>
 					<td><strong>Description: </strong></td>
-					<td>${film.description }</td>
+					<td><c:if test="${not empty film.description }">${film.description }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Release Year: </strong></td>
-					<td>${film.releaseYear }</td>
+					<td><c:if test="${not empty film.releaseYear }">${film.releaseYear }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Language: </strong></td>
@@ -42,40 +42,42 @@
 				</tr>
 				<tr>
 					<td><strong>Category: </strong></td>
-					<td>${film.category }</td>
+					<td><c:if test="${not empty film.category }">${film.category }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Rental Duration: </strong></td>
-					<td>${film.rentalDuration }</td>
+					<td><c:if test="${not empty film.rentalDuration }">${film.rentalDuration }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Rental Rate: </strong></td>
-					<td>${film.rentalRate }</td>
+					<td><c:if test="${not empty film.rentalRate }">${film.rentalRate }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Length:</strong></td>
-					<td>${film.length }</td>
+					<td><c:if test="${not empty film.length }">${film.length }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Replacement Cost: </strong></td>
-					<td>${film.replacementCost }</td>
+					<td><c:if test="${not empty film.replacementCost }">${film.replacementCost }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Rating: </strong></td>
-					<td>${film.rating }</td>
+					<td><c:if test="${not empty film.rating }">${film.rating }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Special Features: </strong></td>
-					<td>${film.specialFeatures }</td>
+					<td><c:if test="${not empty film.specialFeatures }">${film.specialFeatures }</c:if></td>
 				</tr>
 				<tr>
 					<td><strong>Cast</strong></td>
 					<td>
-						<ul>
-							<c:forEach var="actor" items="${film.cast}">
-								<li>${ actor.firstName}${actor.lastName}</li>
-							</c:forEach>
-						</ul>
+						<c:if test="${not empty film.cast }">
+							<ul>
+								<c:forEach var="actor" items="${film.cast}">
+									<li>${ actor.firstName}${actor.lastName}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
 					</td>
 				</tr>
 

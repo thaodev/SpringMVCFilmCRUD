@@ -119,9 +119,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	@Override
 	public Film findFilmById(int filmId) {
 		String sql = "SELECT film.*, language.name, category.name "
-				+ "FROM film JOIN language ON film.language_id = language.id "
-				+ "JOIN film_category ON film.id = film_category.film_id "
-				+ "JOIN category ON film_category.category_id = category.id " + "WHERE film.id = ?";
+				+ "FROM film "
+				+ "LEFT JOIN language ON film.language_id = language.id "
+				+ "LEFT JOIN film_category ON film.id = film_category.film_id "
+				+ "LEFT JOIN category ON film_category.category_id = category.id "
+				+ "WHERE film.id = ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -130,15 +132,15 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			if (rs.next()) {
 				Film film = new Film(filmId, rs.getString("title"), rs.getShort("language_id"));
 				film.setDescription(rs.getString("description"));
-				film.setReleaseYear(rs.getDate("release_year").toLocalDate());
+				film.setReleaseYear(rs.getDate("release_year") == null ? null : rs.getDate("release_year").toLocalDate());
 				film.setLanguage(rs.getString("language.name"));
-				film.setCategory(rs.getString("category.name"));
+				film.setCategory(rs.getString("category.name") == null ? "" : rs.getString("category.name"));
 				film.setRentalDuration(rs.getByte("rental_duration"));
 				film.setRentalRate(rs.getBigDecimal("rental_rate"));
 				film.setLength(rs.getShort("length"));
 				film.setReplacementCost(rs.getBigDecimal("replacement_cost"));
 				film.setRating(rs.getString("rating"));
-				film.setSpecialFeatures(rs.getString("special_features"));
+				film.setSpecialFeatures(rs.getString("special_features") == null ? "" : rs.getString("special_features"));
 				film.setCast(this.findActorsByFilmId(filmId));
 				film.setInventory(this.getFilmInventory(filmId));
 				
