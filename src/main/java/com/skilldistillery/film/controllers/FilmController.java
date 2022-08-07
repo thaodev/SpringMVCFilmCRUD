@@ -31,11 +31,23 @@ public class FilmController {
 
 	}
 
+//	@RequestMapping(path = "findFilmByKeyword.do", method = RequestMethod.GET)
+//	public ModelAndView findFilmByKeyword(String keyword, @ModelAttribute("films") ArrayList<Film> films, Model model) {
+//		films = new ArrayList<>(dba.findFilmByKeyword(keyword));
+//		ModelAndView mv = new ModelAndView();
+//		mv.getModelMap().addAttribute("films", films);
+//		mv.setViewName("viewFilmList");
+//		return mv;
+//
+//	}
+	
 	@RequestMapping(path = "findFilmByKeyword.do", method = RequestMethod.GET)
-	public ModelAndView findFilmByKeyword(String keyword, @ModelAttribute("films") ArrayList<Film> films, Model model) {
-		films = new ArrayList<>(dba.findFilmByKeyword(keyword));
+	public ModelAndView findFilmByKeyword(String keyword) {
+		ArrayList<Film> films = new ArrayList<>(dba.findFilmByKeyword(keyword));
 		ModelAndView mv = new ModelAndView();
-		mv.getModelMap().addAttribute("films", films);
+		mv.addObject("films", films);
+		mv.addObject("criteria", keyword);
+		mv.addObject("numResults", films.size());
 		mv.setViewName("viewFilmList");
 		return mv;
 
