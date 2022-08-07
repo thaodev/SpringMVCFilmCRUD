@@ -149,6 +149,21 @@ required
 
 	</div>
 
+	<c:choose>
+		<c:when test="${empty title}">
+
+		</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test="${empty filmAdded }">
+					<p>No film added</p>
+				</c:when>
+				<c:otherwise>
+					<p>Save successfully</p>
+				</c:otherwise>
+			</c:choose>
+		</c:otherwise>
+	</c:choose>
 
 	<!-- JavaScript Bundle with Popper -->
 	<script

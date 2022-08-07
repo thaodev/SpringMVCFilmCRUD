@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.DatabaseAccessor;
 import com.skilldistillery.film.entities.Film;
@@ -51,11 +52,10 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film) {
-		
+	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
 		film = dba.createFilm(film);
-
 		ModelAndView mv = new ModelAndView();
+		redir.addFlashAttribute("filmAdded", film);
 		mv.setViewName("redirect:filmCreated.do");
 		return mv;
 
@@ -63,21 +63,12 @@ public class FilmController {
 
 	@RequestMapping(path = "filmCreated.do", // mapping to handle Redirect
 			method = RequestMethod.GET)
-	public ModelAndView filmCreated() {
+	public ModelAndView filmCreated(Film filmAdded) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("result");
+		mv.setViewName("filmAddedresult");
 		return mv;
 	}
 
-//	@RequestMapping(value = "/getuserForm", produces = "text/html", method = RequestMethod.GET)
-//	public ModelAndView returnUserForm(
-//	        @ModelAttribute("managerList") List<Manager> managerList,
-//	        Model model) {
-//	    //how to include managerList
-//	    ModelAndView mnv=  new ModelAndView("userForm");
-//	    mnv.getModelMap().addAttribute("managerList", managerList);
-//	    return mnv;
-//	}
 	
 	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
 	public ModelAndView deleteFilm(int filmId) {
@@ -107,17 +98,18 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
-	public ModelAndView updateFilm(Film film) {
+	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		System.out.println("in update film");
 		boolean result = dba.updateFilm(film);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("result", result);
+		redir.addFlashAttribute("updateResult", result);
+//		mv.addObject("result", result);
 		mv.setViewName("redirect:filmUpdated.do");
 		return mv;
 	}
 	
 	@RequestMapping(path = "filmUpdated.do", method = RequestMethod.GET)
-	public ModelAndView filmUpdated(){
+	public ModelAndView filmUpdated(boolean updateResult){
 		System.out.println("in film updated");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateResult");

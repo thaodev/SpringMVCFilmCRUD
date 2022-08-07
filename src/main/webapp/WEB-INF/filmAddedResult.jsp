@@ -19,7 +19,7 @@
 <body>
 
 	<c:choose>
-		<c:when test="${empty film }">
+		<c:when test="${empty filmAdded }">
 			<p>No film added</p>
 		</c:when>
 		<c:otherwise>
