@@ -128,27 +128,35 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
-						rs.getDate("release_year").toLocalDate(), rs.getShort("language_id"),
-						rs.getString("language.name"), rs.getString("category.name"), rs.getByte("rental_duration"),
-						rs.getBigDecimal("rental_rate"), rs.getShort("length"), rs.getBigDecimal("replacement_cost"),
-						rs.getString("rating"), rs.getString("special_features"),
-						this.findActorsByFilmId(rs.getInt("id")), this.getFilmInventory(filmId));
+				Film film = new Film(filmId, rs.getString("title"), rs.getShort("language_id"));
+				film.setDescription(rs.getString("description"));
+				film.setReleaseYear(rs.getDate("release_year").toLocalDate());
+				film.setLanguage(rs.getString("language.name"));
+				film.setCategory(rs.getString("category.name"));
+				film.setRentalDuration(rs.getByte("rental_duration"));
+				film.setRentalRate(rs.getBigDecimal("rental_rate"));
+				film.setLength(rs.getShort("length"));
+				film.setReplacementCost(rs.getBigDecimal("replacement_cost"));
+				film.setRating(rs.getString("rating"));
+				film.setSpecialFeatures(rs.getString("special_features"));
+				film.setCast(this.findActorsByFilmId(filmId));
+				film.setInventory(this.getFilmInventory(filmId));
+				
+				return film;
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			System.out.println("problem");
 		}
 		return null;
 	}
 
 	@Override
-	public List<Film> findFilmByKeyword(String keyword) {
-		List<Film> films = new ArrayList<Film>();
-		String sql = "SELECT film.*, language.name, category.name "
-				+ "FROM film JOIN language ON film.language_id = language.id "
-				+ "JOIN film_category ON film.id = film_category.film_id "
-				+ "JOIN category ON film_category.category_id = category.id "
-				+ "WHERE UPPER(film.title) LIKE UPPER(?) OR UPPER(film.description) LIKE UPPER(?)";
+	public Map<Integer, String> findFilmByKeyword(String keyword) {
+		Map<Integer, String> films = new HashMap<Integer, String>();
+		String sql = "SELECT id, title"
+				+ " FROM film"
+				+ " WHERE UPPER(film.title) LIKE UPPER(?) OR UPPER(film.description) LIKE UPPER(?)";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -156,13 +164,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setString(2, "%" + keyword + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				films.add(new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
-						rs.getDate("release_year").toLocalDate(), rs.getShort("language_id"),
-						rs.getString("language.name"), rs.getString("category.name"), rs.getByte("rental_duration"),
-						rs.getBigDecimal("rental_rate"), rs.getShort("length"), rs.getBigDecimal("replacement_cost"),
-						rs.getString("rating"), rs.getString("special_features"),
-						this.findActorsByFilmId(rs.getInt("id")), this.getFilmInventory(rs.getInt("film.id"))));
-				System.out.println(films.get(0));
+				films.put(rs.getInt("id"), rs.getString("title"));
 			}
 			return films;
 		} catch (SQLException sqle) {

@@ -13,8 +13,8 @@
 		<c:forEach var="film" items="${ films}">
 			<tr>
 				<td>
-					<a href="findFilmByID.do?filmId=<c:out value="${film.id }"/>">
-						<c:out value="${film.title }"/> (<c:out value="${film.releaseYear }"/>)
+					<a href="findFilmByID.do?filmId=<c:out value="${film.key }"/>">
+						<c:out value="${film.value }"/>
 					</a>
 				</td>
 			</tr>

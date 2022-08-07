@@ -61,6 +61,12 @@ public class Film {
 		this.description = description;
 		this.languageId = languageId;
 	}
+	
+	public Film(int id, String title, short languageId) {
+		this.id = id;
+		this.title = title;
+		this.languageId = languageId;
+	}
 
 	/**
 	 * @return the rentalDuration

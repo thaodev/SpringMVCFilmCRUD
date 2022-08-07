@@ -1,12 +1,9 @@
 package com.skilldistillery.film.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,7 +40,7 @@ public class FilmController {
 	
 	@RequestMapping(path = "findFilmByKeyword.do", method = RequestMethod.GET)
 	public ModelAndView findFilmByKeyword(String keyword) {
-		ArrayList<Film> films = new ArrayList<>(dba.findFilmByKeyword(keyword));
+		Map<Integer, String> films = dba.findFilmByKeyword(keyword);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("films", films);
 		mv.addObject("criteria", keyword);
