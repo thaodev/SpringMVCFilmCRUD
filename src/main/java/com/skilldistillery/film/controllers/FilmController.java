@@ -94,5 +94,16 @@ public class FilmController {
 		mv.setViewName("result2");
 		return mv;
 	}
+	
+	@RequestMapping(path = "updateFilm.do", method = RequestMethod.GET)
+	public ModelAndView updateFilm(int filmId) {
+		Film film = dba.findFilmById(filmId);
+		ModelAndView mv = new ModelAndView();
+		if (film != null) {
+			mv.addObject(film);
+		}
+		mv.setViewName("updateFilm");
+		return mv;
+	}
 
 }
