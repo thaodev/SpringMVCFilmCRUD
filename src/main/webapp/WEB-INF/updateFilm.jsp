@@ -172,40 +172,87 @@ required
 			</div>
 			<div>
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="Trailers"
-						id="flexCheckDefault" name="specialFeatures"
-						<c:if test="${fn:contains(film.specialFeatures, 'Trailers')}">checked</c:if>><label class="form-check-label"
-						for="flexCheckDefault"> Trailers </label>
+					<input class="form-check-input" type="checkbox"
+						id="cbox1" name="features" value="Trailers" 
+						<c:if test="${fn:contains(film.specialFeatures, 'Trailers')}">checked</c:if>>
+					<label class="form-check-label" for="flexCheckDefault"> Trailers </label>
 				</div>
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox"
-						value="Commentaries" id="flexCheck2" <c:if test="${fn:contains(film.specialFeatures, 'Commentaries')}">checked</c:if>> <label
-						class="form-check-label" for="flexCheck2"> Commentaries </label>
+						id="cbox2" name="features" value="Commentaries" 
+						<c:if test="${fn:contains(film.specialFeatures, 'Commentaries')}">checked</c:if>>
+					<label class="form-check-label" for="flexCheck2"> Commentaries </label>
 				</div>
 
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox"
-						value="Deleted Scences" id="flexCheck3" <c:if test="${fn:contains(film.specialFeatures, 'Deleted Scenes')}">checked</c:if>> <label
-						class="form-check-label" for="flexCheck3"> Deleted Scenes
-					</label>
+						id="cbox3" name="features" value="Deleted Scenes"
+						<c:if test="${fn:contains(film.specialFeatures, 'Deleted Scenes')}">checked</c:if>>
+					<label class="form-check-label" for="flexCheck3"> Deleted Scenes</label>
 				</div>
 
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox"
-						value="Deleted Scences" id="flexCheck4" <c:if test="${fn:contains(film.specialFeatures, 'Behind the Scenes')}">checked</c:if>> <label
-						class="form-check-label" for="flexCheck4"> Behind the Scenes
-					</label>
-				</div>
-
-				<div class="text-center mt-3">
-					<button type="submit" class="btn btn-primary">Add Film</button>
+						id="cbox4" name="features" value="Behind the Scenes"
+						<c:if test="${fn:contains(film.specialFeatures, 'Behind the Scenes')}">checked</c:if>>
+					<label class="form-check-label" for="flexCheck4"> Behind the Scenes</label>
 				</div>
 			</div>
+			<input type="hidden" name="specialFeatures" value=""/>
+			
+ 				    <script>
+ 					const cbox1 = document.getElementById('cbox1');
+   					cbox1.addEventListener('change', (event) => {
+      					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+      					document.querySelector('input[name="specialFeatures"]').value = "";
+    					for (let i = 0; i < checkboxes.length; i++) {
+      						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+      						if (i < checkboxes.length - 1) {
+      							document.querySelector('input[name="specialFeatures"]').value += ',';
+      						}
+      					}
 
+						});  
+      					const cbox2 = document.getElementById('cbox2');
+       					cbox2.addEventListener('change', (event) => {
+          					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+          					document.querySelector('input[name="specialFeatures"]').value = "";
+        					for (let i = 0; i < checkboxes.length; i++) {
+          						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+          						if (i < checkboxes.length - 1) {
+          							document.querySelector('input[name="specialFeatures"]').value += ',';
+          						}
+          					}
+ 
+							});    
+     					const cbox3 = document.getElementById('cbox3');
+       					cbox3.addEventListener('change', (event) => {
+          					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+          					document.querySelector('input[name="specialFeatures"]').value = "";
+        					for (let i = 0; i < checkboxes.length; i++) {
+          						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+          						if (i < checkboxes.length - 1) {
+          							document.querySelector('input[name="specialFeatures"]').value += ',';
+          						}
+          					}
 
+    						});  
+          					const cbox4 = document.getElementById('cbox4');
+           					cbox4.addEventListener('change', (event) => {
+              					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+              					document.querySelector('input[name="specialFeatures"]').value = "";
+            					for (let i = 0; i < checkboxes.length; i++) {
+              						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+              						if (i < checkboxes.length - 1) {
+              							document.querySelector('input[name="specialFeatures"]').value += ',';
+              						}
+              					}
+     
+    							});  
+					</script>
 
 			<div class="text-center mt-3">
-				<button type="submit" class="btn btn-primary">Update Film</button>
+				<button type="submit" id="btn" class="btn btn-primary">Update Film</button>
 			</div>
 		</form>
 
