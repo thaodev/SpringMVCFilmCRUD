@@ -15,7 +15,8 @@ public class Film {
 	private int id;
 	private BigDecimal rentalRate, replacementCost;
 	private String title, description, language, category, rating, specialFeatures;
-	private LocalDate releaseYear;
+//	private LocalDate releaseYear;
+	private int releaseYear;
 	private List<Actor> cast;
 	Map<String, Set<Integer>> inventory;
 
@@ -36,7 +37,7 @@ public class Film {
 	 * @param releaseYear
 	 * @param rating
 	 */
-	public Film(int id, String title, String description, LocalDate releaseYear, short languageId, String language,
+	public Film(int id, String title, String description, int releaseYear, short languageId, String language,
 			String category, byte rentalDuration, BigDecimal rentalRate, short length, BigDecimal replacementCost,
 			String rating, String specialFeatures, List<Actor> cast, Map<String, Set<Integer>> inventory) {
 		this.id = id;
@@ -225,14 +226,14 @@ public class Film {
 	/**
 	 * @return the releaseYear
 	 */
-	public LocalDate getReleaseYear() {
+	public int getReleaseYear() {
 		return releaseYear;
 	}
 
 	/**
 	 * @param releaseYear the releaseYear to set
 	 */
-	public void setReleaseYear(LocalDate releaseYear) {
+	public void setReleaseYear(int releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 
@@ -283,7 +284,7 @@ public class Film {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("|| " + this.getTitle() + " (" + this.getReleaseYear().getYear() + ") ||").append("\n\n")
+		sb.append("|| " + this.getTitle() + " (" + this.getReleaseYear() + ") ||").append("\n\n")
 				.append(this.getDescription()).append("\n\n")
 				.append("Rating: " + this.getRating() + "\t" + "Language: " + this.getLanguage()).append("\n")
 				.append("Cast: ");
@@ -305,7 +306,7 @@ public class Film {
 	
 	public String toStringDetails() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("|| " + this.getTitle() + " (" + this.getReleaseYear().getYear() + ") ||").append("\n\n")
+		sb.append("|| " + this.getTitle() + " (" + this.getReleaseYear() + ") ||").append("\n\n")
 		.append(this.getDescription()).append("\n\n")
 		.append("Rating: " + this.getRating() + "\t" + "Language: " + this.getLanguage()).append("\n")
 		.append("Run Time: " + this.getLength() + " min" + "\t" + "Category: " + this.getCategory()).append("\n")

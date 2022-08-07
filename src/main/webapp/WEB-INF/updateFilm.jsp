@@ -58,7 +58,7 @@ required
 					aria-describedby="description" placeholder="Enter film description" value="<c:out value="${film.description }"/>">
 			</div>
 			<div class="form-group">
-				<label for="year">Release Year</label> <input type="text"
+				<label for="year">Release Year</label> <input type="number"
 					class="form-control" name="releaseYear" id="year"
 					aria-describedby="Release Year"
 					placeholder="Enter film release year" value="<c:out value="${film.releaseYear }"/>">
@@ -147,6 +147,25 @@ required
 			</div>
 		</form>
 
+	</div>
+	
+	<div>
+	
+		<c:choose>
+		<c:when test="${empty updateResult}">
+			
+		</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test="${updateResult = true }">
+					<p>Film successfully updated</p>
+				</c:when>
+				<c:otherwise>
+					<p>Update unsuccessful</p>
+				</c:otherwise>
+			</c:choose>
+		</c:otherwise>
+	</c:choose>
 	</div>
 
 

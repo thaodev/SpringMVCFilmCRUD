@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,9 +52,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			stmt.setString(2,
 					film.getDescription().length() == 0 || film.getDescription() == null ? "" : film.getDescription());
-
-			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
-					: film.getReleaseYear().getYear());
+			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022
+					: film.getReleaseYear());
 
 			stmt.setInt(4, film.getLanguageId());
 
@@ -132,7 +133,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			if (rs.next()) {
 				Film film = new Film(filmId, rs.getString("title"), rs.getShort("language_id"));
 				film.setDescription(rs.getString("description"));
-				film.setReleaseYear(rs.getDate("release_year") == null ? null : rs.getDate("release_year").toLocalDate());
+//				film.setReleaseYear(rs.getDate("release_year") == null ? null : rs.getDate("release_year").toLocalDate());
+				film.setReleaseYear(rs.getInt("release_year"));
 				film.setLanguage(rs.getString("language.name"));
 				film.setCategory(rs.getString("category.name") == null ? "" : rs.getString("category.name"));
 				film.setRentalDuration(rs.getByte("rental_duration"));
@@ -269,8 +271,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setString(2,
 					film.getDescription().length() == 0 || film.getDescription() == null ? "" : film.getDescription());
 
-			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
-					: film.getReleaseYear().getYear());
+//			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
+//					: film.getReleaseYear().getYear());
+			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022
+					: film.getReleaseYear());
 
 			stmt.setInt(4, film.getLanguageId());
 
@@ -292,7 +296,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setInt(11, film.getId());
 
 			int updateCount = stmt.executeUpdate();
-			System.out.println(updateCount + " film created.");
+			System.out.println(updateCount + " film updated.");
 			
 			return true;
 

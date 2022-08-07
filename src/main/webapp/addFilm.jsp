@@ -19,9 +19,9 @@ required
 	rel="stylesheet"
 	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 	crossorigin="anonymous">
-<!-- Bootstrap Font Icon CSS -->
+<!-- <!-- Bootstrap Font Icon CSS
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> -->
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -58,7 +58,7 @@ required
 					aria-describedby="description" placeholder="Enter film description">
 			</div>
 			<div class="form-group">
-				<label for="year">Release Year</label> <input type="text"
+				<label for="year">Release Year</label> <input type="number"
 					class="form-control" name="releaseYear" id="year"
 					aria-describedby="Release Year"
 					placeholder="Enter film release year">

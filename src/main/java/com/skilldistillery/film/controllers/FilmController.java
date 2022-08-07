@@ -109,10 +109,10 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path = "filmUpdated.do", method = RequestMethod.GET)
-	public ModelAndView filmUpdated(boolean updateResult){
+	public ModelAndView filmUpdated(){
 		System.out.println("in film updated");
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("updateResult");
+		mv.setViewName("updateFilm");
 		return mv;
 	}
 
