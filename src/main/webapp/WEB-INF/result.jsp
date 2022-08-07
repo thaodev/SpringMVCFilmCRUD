@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Save Success</title>
+<title>Save Result</title>
 
 
 <!-- CSS only -->
@@ -17,10 +17,16 @@
 	crossorigin="anonymous">
 </head>
 <body>
-<a href="index.html">Back to the home page</a>
-<p>Save successfully</p>
 
-<!-- JavaScript Bundle with Popper -->
+	<c:choose>
+		<c:when test="${empty film }">
+			<p>No film added</p>
+		</c:when>
+		<c:otherwise>
+			<p>Save successfully</p>
+		</c:otherwise>
+	</c:choose>
+	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
