@@ -50,7 +50,7 @@ required
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
 					class="form-control" name="title" id="desc" required
-					aria-describedby="description" placeholder="Enter film title" value="<c:out value="${film.title }"/>">
+					aria-describedby="description" placeholder="Enter film title" />">
 			</div>
 			<div class="form-group">
 				<label for="desc">Description</label> <input type="text"
