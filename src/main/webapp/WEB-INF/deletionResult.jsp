@@ -35,14 +35,17 @@
 			</div>
 		</div>
 	</nav>
+	<div class="container-fluid text-center">
 	<c:choose>
 		<c:when test="${result = true}">
-			<p>Film successfully deleted</p>
+			<img src="sad.jpeg"/>
+			<p style="font-size: 40px">Film successfully deleted &#128520</p>
 		</c:when>
 		<c:otherwise>
-			<p>Deletion unsuccessful</p>
+			<p style="font-size: 40px">Deletion unsuccessful &#128529</p>
 		</c:otherwise>
 	</c:choose>
+	</div>
 	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

@@ -38,11 +38,11 @@
 	<div class="container-fluid text-center">
 		<c:choose>
 			<c:when test="${empty filmAdded }">
-			<img src="WEB-INF/sad.jpeg"/>
-				<p>No film added</p>
+			<img src="sad.jpeg"/>
+				<p >No film added</p>
 			</c:when>
 			<c:otherwise>
-				<p>Save successfully</p>
+				<p style="font-size:40px">Film added successfully &#128579</p>
 			</c:otherwise>
 		</c:choose>
 	</div>

@@ -272,10 +272,10 @@ required
 			<c:otherwise>
 				<c:choose>
 					<c:when test="${updateResult = true }">
-						<p>Film successfully updated</p>
+						<p style="font-size: 30px">Film successfully updated &#128526</p>
 					</c:when>
 					<c:otherwise>
-						<p>Update unsuccessful</p>
+						<p style="font-size: 30px">Update unsuccessful &#128532 </p>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

@@ -65,9 +65,10 @@ required
 			</div>
 			<div class="form-group">
 				<label for="lang">Language*</label> <select class="form-select"
-					name="languageId" required id="lang"
+					name="languageId"  id="lang" required
 					aria-label="Default select example">
-					<option selected>Select film language</option>
+					<!-- <option selected>Select film language</option> -->
+					<option value=""></option>
 					<option value="1">English</option>
 					<option value="2">Italian</option>
 					<option value="3">Japanese</option>

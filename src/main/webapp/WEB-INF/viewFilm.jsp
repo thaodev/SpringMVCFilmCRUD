@@ -34,10 +34,10 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-fluid ">
+	<div class="container-fluid text-center">
 		<c:choose>
 			<c:when test="${empty film }">
-				<p>Film Not Found</p>
+				<p style="font-size:100px">Film Not Found &#128527</p>
 			</c:when>
 			<c:otherwise>
 

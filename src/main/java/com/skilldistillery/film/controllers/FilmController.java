@@ -54,22 +54,22 @@ public class FilmController {
 
 	}
 	
-	@RequestMapping (path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addActor (Actor actor, RedirectAttributes redir) {
-		actor = dba.createActor(actor);
-		ModelAndView mv = new ModelAndView();
-		redir.addFlashAttribute("actorAdded", actor);
-		mv.setViewName("redirect: filmCreated.do");
-		return mv;
-		
-	}
-	@RequestMapping(path = "actorCreated.do", // mapping to handle Redirect
-			method = RequestMethod.GET)
-	public ModelAndView ActorCreated(Actor actorAdded) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("actorAddedresult");
-		return mv;
-	}
+//	@RequestMapping (path = "addFilm.do", method = RequestMethod.POST)
+//	public ModelAndView addActor (Actor actor, RedirectAttributes redir) {
+//		actor = dba.createActor(actor);
+//		ModelAndView mv = new ModelAndView();
+//		redir.addFlashAttribute("actorAdded", actor);
+//		mv.setViewName("redirect: filmCreated.do");
+//		return mv;
+//		
+//	}
+//	@RequestMapping(path = "actorCreated.do", // mapping to handle Redirect
+//			method = RequestMethod.GET)
+//	public ModelAndView ActorCreated(Actor actorAdded) {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("actorAddedresult");
+//		return mv;
+//	}
 
 	
 
