@@ -17,6 +17,26 @@ public class FilmController {
 	@Autowired
 	private DatabaseAccessor dba;
 
+	// CREATE
+	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
+	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
+		film = dba.createFilm(film);
+		ModelAndView mv = new ModelAndView();
+		redir.addFlashAttribute("filmAdded", film);
+		mv.setViewName("redirect:filmCreated.do");
+		return mv;
+
+	}
+
+	@RequestMapping(path = "filmCreated.do", // mapping to handle Redirect
+			method = RequestMethod.GET)
+	public ModelAndView filmCreated(Film filmAdded) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("filmAddedResult");
+		return mv;
+	}
+	
+	// RETRIEVE
 	@RequestMapping(path = "findFilmByID.do", method = RequestMethod.GET)
 	public ModelAndView findFilmByID(int filmId) {
 		Film film = dba.findFilmById(filmId);
@@ -68,43 +88,7 @@ public class FilmController {
 //		return mv;
 //	}
 
-	
-
-	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
-		film = dba.createFilm(film);
-		ModelAndView mv = new ModelAndView();
-		redir.addFlashAttribute("filmAdded", film);
-		mv.setViewName("redirect:filmCreated.do");
-		return mv;
-
-	}
-
-	@RequestMapping(path = "filmCreated.do", // mapping to handle Redirect
-			method = RequestMethod.GET)
-	public ModelAndView filmCreated(Film filmAdded) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("filmAddedResult");
-		return mv;
-	}
-
-	
-	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
-	public ModelAndView deleteFilm(int filmId) {
-		boolean result = dba.deleteFilmById(filmId);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("result", result);
-		mv.setViewName("redirect:filmDeleted.do");
-		return mv;
-	}
-	
-	@RequestMapping(path = "filmDeleted.do", method = RequestMethod.GET)
-	public ModelAndView filmDeleted(){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("deletionResult");
-		return mv;
-	}
-	
+	// UPDATE
 	@RequestMapping(path = "presentFilmForUpdate.do", method = RequestMethod.GET)
 	public ModelAndView updateFilm(int filmId) {
 		Film film = dba.findFilmById(filmId);
@@ -135,6 +119,24 @@ public class FilmController {
 		System.out.println("in film updated");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateFilm");
+		return mv;
+	}
+	
+	// DELETE
+	
+	@RequestMapping(path = "deleteFilm.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(int filmId, RedirectAttributes redir) {
+		boolean result = dba.deleteFilmById(filmId);
+		ModelAndView mv = new ModelAndView();
+		redir.addFlashAttribute("result", result);
+		mv.setViewName("redirect:filmDeleted.do");
+		return mv;
+	}
+	
+	@RequestMapping(path = "filmDeleted.do", method = RequestMethod.GET)
+	public ModelAndView filmDeleted(){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("deletionResult");
 		return mv;
 	}
 
