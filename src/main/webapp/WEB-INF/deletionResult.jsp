@@ -37,7 +37,7 @@
 	</nav>
 	<div class="container-fluid text-center">
 	<c:choose>
-		<c:when test="${result = true}">
+		<c:when test="${result }">
 			<img src="sad.jpeg"/>
 			<p style="font-size: 40px">Film successfully deleted &#128520</p>
 		</c:when>
