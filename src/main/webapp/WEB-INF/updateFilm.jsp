@@ -45,6 +45,26 @@ required
 	</nav>
 	<div class="container-fluid">
 		<div class="text-center">
+				<div>
+
+		<c:choose>
+			<c:when test="${empty updateResult}">
+
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${updateResult = true }">
+								<img id="resultImg" alt="success"/>
+						<p style="font-size: 30px">Film successfully updated &#128526</p>
+					</c:when>
+					<c:otherwise>
+								<img id="resultImg" alt="failure"/>
+						<p style="font-size: 30px">Update unsuccessful &#128532 </p>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</div>
 			<h1>UPDATE FILM</h1>
 		</div>
 		<form action="updateFilm.do" method="POST">
@@ -263,26 +283,21 @@ required
 
 	</div>
 
-	<div>
+		<script>
+			window.addEventListener('load', loadImg);
 
-		<c:choose>
-			<c:when test="${empty updateResult}">
-
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${updateResult = true }">
-						<p style="font-size: 30px">Film successfully updated &#128526</p>
-					</c:when>
-					<c:otherwise>
-						<p style="font-size: 30px">Update unsuccessful &#128532 </p>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
-	</div>
-
-
+			function loadImg() {
+  				var imageElement = document.getElementById('resultImg');
+  				const url = "https://api.unsplash.com/photos/random?query=" + imageElement.alt.replace(/ /g, "+") + "&client_id=yp_PY-Nzr42qXpkFPOmRWgecEs4-guyD3mM42yiyT9o";
+   				fetch(url)
+        			.then(response => {
+            			return response.json();
+       					})
+        			.then(data => {
+                        imageElement.src = data.urls.thumb;
+                    	});
+				}
+	</script>
 	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

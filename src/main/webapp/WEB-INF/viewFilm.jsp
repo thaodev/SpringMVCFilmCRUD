@@ -42,10 +42,18 @@
 				<p style="font-size:100px">Film Not Found &#128527</p>
 			</c:when>
 			<c:otherwise>
-				<img id="filmImg" alt="<c:out value="${film.title }"/>"/>
-				<table class="center">
-					<tr>
-						<th><strong><em>${film.title }</em></strong></th>
+
+			<table class="center">
+			<tr>
+				<td>
+						<div align="left">
+							<img id="filmImg" alt="<c:out value="${film.title }"/>"/>
+						</div>
+				</td>
+				<td>
+				<table>
+					<tr colspan="2">
+						<strong><em>${film.title }</em></strong>
 					</tr>
 					<tr>
 
@@ -102,7 +110,9 @@
 								</ul>
 							</c:if></td>
 					</tr>
-
+					</table>
+				</td>
+			</tr>
 
 
 				</table>
@@ -128,7 +138,7 @@
 		</c:choose>
 
 	</div>
-		<script>
+	<script>
 			window.addEventListener('load', loadImg);
 
 			function loadImg() {
@@ -139,16 +149,16 @@
             			return response.json();
        					})
         			.then(data => {
-                        imageElement.src = data.urls.thumb;
+                        imageElement.src = data.urls.small;
                     	});
 				}
-</script>
+	</script>
 	
-<script
+	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
 		crossorigin="anonymous">
-</script>
+	</script>
 </body>
 
 </html>
