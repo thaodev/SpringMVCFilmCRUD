@@ -58,8 +58,8 @@ required
 					aria-describedby="description" placeholder="Enter film description">
 			</div>
 			<div class="form-group">
-				<label for="year">Release Year</label> <input type="number"
-					class="form-control" name="releaseYear" id="year"
+				<label for="year">Release Year*</label> <input type="number"
+					required class="form-control" name="releaseYear" id="year"
 					aria-describedby="Release Year"
 					placeholder="Enter film release year">
 			</div>
@@ -81,21 +81,21 @@ required
 				<label for="lang">Category</label> <select class="form-select"
 					id="lang" aria-label="Default select example">
 					<option selected>Select film category</option>
-					<option value="1">1. Action</option>
-					<option value="2">2. Animation</option>
-					<option value="3">3. Children</option>
-					<option value="4">4. Classics</option>
-					<option value="5">5. Comedy</option>
-					<option value="6">6. Documentary</option>
-					<option value="7">7. Drama</option>
-					<option value="8">8. Family</option>
-					<option value="9">9. Foreign</option>
-					<option value="10">10. Games</option>
-					<option value="11">11. Horror</option>
-					<option value="12">12. Music</option>
-					<option value="13">13. New</option>
-					<option value="14">14. Sci-Fi</option>
-					<option value="15">15. Sport</option>
+					<option value="1">Action</option>
+					<option value="2">Animation</option>
+					<option value="3">Children</option>
+					<option value="4">Classics</option>
+					<option value="5">Comedy</option>
+					<option value="6">Documentary</option>
+					<option value="7">Drama</option>
+					<option value="8">Family</option>
+					<option value="9">Foreign</option>
+					<option value="10">Games</option>
+					<option value="11">Horror</option>
+					<option value="12">Music</option>
+					<option value="13">New</option>
+					<option value="14">Sci-Fi</option>
+					<option value="15">Sport</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -141,36 +141,93 @@ required
 				</select>
 			</div> -->
 
+
 			<div>
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="Trailers"
-						id="flexCheckDefault"> <label class="form-check-label"
-						for="flexCheckDefault"> Trailers </label>
-				</div>
-				<div class="form-check">
+				<label>Special Features</label>
+				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						value="Commentaries" id="flexCheck2" checked> <label
-						class="form-check-label" for="flexCheck2"> Commentaries </label>
+						name="features" value="Trailers" id="flexCheckDefault">
+					<label class="form-check-label" for="flexCheckDefault">
+						Trailers </label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox"
+						name="features" value="Commentaries" id="flexCheck2"
+						checked> <label class="form-check-label" for="flexCheck2">
+						Commentaries </label>
 				</div>
 
-				<div class="form-check">
+				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						value="Deleted Scences" id="flexCheck3" checked> <label
-						class="form-check-label" for="flexCheck3"> Deleted Scences
-					</label>
+						name="features" value="Deleted Scences" id="flexCheck3"
+						checked> <label class="form-check-label" for="flexCheck3">
+						Deleted Scences </label>
 				</div>
 
-				<div class="form-check">
+				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						value="Deleted Scences" id="flexCheck4" checked> <label
-						class="form-check-label" for="flexCheck4"> Behind the Scenes
-					</label>
+						name="features" value="Deleted Scences" id="flexCheck4"
+						checked> <label class="form-check-label" for="flexCheck4">
+						Behind the Scenes </label>
 				</div>
+				</div>
+				
+				<input type="hidden" name="specialFeatures" value="" />
+				<script>
+ 					const cbox1 = document.getElementById('cbox1');
+   					cbox1.addEventListener('change', (event) => {
+      					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+      					document.querySelector('input[name="specialFeatures"]').value = "";
+    					for (let i = 0; i < checkboxes.length; i++) {
+      						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+      						if (i < checkboxes.length - 1) {
+      							document.querySelector('input[name="specialFeatures"]').value += ',';
+      						}
+      					}
 
+						});  
+      				const cbox2 = document.getElementById('cbox2');
+       				cbox2.addEventListener('change', (event) => {
+          					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+          					document.querySelector('input[name="specialFeatures"]').value = "";
+        					for (let i = 0; i < checkboxes.length; i++) {
+          						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+          						if (i < checkboxes.length - 1) {
+          							document.querySelector('input[name="specialFeatures"]').value += ',';
+          						}
+          					}
+ 
+							});    
+     				const cbox3 = document.getElementById('cbox3');
+       				cbox3.addEventListener('change', (event) => {
+          					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+          					document.querySelector('input[name="specialFeatures"]').value = "";
+        					for (let i = 0; i < checkboxes.length; i++) {
+          						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+          						if (i < checkboxes.length - 1) {
+          							document.querySelector('input[name="specialFeatures"]').value += ',';
+          						}
+          					}
+
+    						});  
+          			const cbox4 = document.getElementById('cbox4');
+           			cbox4.addEventListener('change', (event) => {
+           					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
+           					document.querySelector('input[name="specialFeatures"]').value = "";
+           					for (let i = 0; i < checkboxes.length; i++) {
+             						document.querySelector('input[name="specialFeatures"]').value += checkboxes[i].value;
+             						if (i < checkboxes.length - 1) {
+             							document.querySelector('input[name="specialFeatures"]').value += ',';
+             						}
+             					}
+    
+   							});  
+					</script>
 				<div class="text-center mt-3">
 					<button type="submit" class="btn btn-primary">Add Film</button>
 				</div>
-			</div>
+
+			
 		</form>
 
 	</div>

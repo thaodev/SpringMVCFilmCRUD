@@ -273,6 +273,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 //			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
 //					: film.getReleaseYear().getYear());
+			
 			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022
 					: film.getReleaseYear());
 
