@@ -42,12 +42,18 @@
 				<p style="font-size:100px">Film Not Found &#128527</p>
 			</c:when>
 			<c:otherwise>
-			<div align="left">
-				<img id="filmImg" alt="<c:out value="${film.title }"/>"/>
-				</div>
-				<table class="center">
-					<tr>
-						<th><strong><em>${film.title }</em></strong></th>
+
+			<table class="center">
+			<tr>
+				<td>
+						<div align="left">
+							<img id="filmImg" alt="<c:out value="${film.title }"/>"/>
+						</div>
+				</td>
+				<td>
+				<table>
+					<tr colspan="2">
+						<strong><em>${film.title }</em></strong>
 					</tr>
 					<tr>
 
@@ -104,7 +110,9 @@
 								</ul>
 							</c:if></td>
 					</tr>
-
+					</table>
+				</td>
+			</tr>
 
 
 				</table>
@@ -140,7 +148,7 @@
             			return response.json();
        					})
         			.then(data => {
-                        imageElement.src = data.urls.thumb;
+                        imageElement.src = data.urls.small;
                     	});
 				}
 	</script>
