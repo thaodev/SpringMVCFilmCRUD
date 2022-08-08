@@ -14,6 +14,8 @@
 	rel="stylesheet"
 	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 	crossorigin="anonymous">
+	
+
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,7 +42,7 @@
 				<p style="font-size:100px">Film Not Found &#128527</p>
 			</c:when>
 			<c:otherwise>
-
+				<img id="filmImg" alt="<c:out value="${film.title }"/>"/>
 				<table class="center">
 					<tr>
 						<th><strong><em>${film.title }</em></strong></th>
@@ -125,10 +127,27 @@
 		</c:choose>
 
 	</div>
-	<script
+		<script>
+			window.addEventListener('load', loadImg);
+
+			function loadImg() {
+  				var imageElement = document.getElementById('filmImg');
+  				const url = "https://api.unsplash.com/photos/random?query=" + imageElement.alt.replace(/ /g, "+") + "&client_id=yp_PY-Nzr42qXpkFPOmRWgecEs4-guyD3mM42yiyT9o";
+   				fetch(url)
+        			.then(response => {
+            			return response.json();
+       					})
+        			.then(data => {
+                        imageElement.src = data.urls.thumb;
+                    	});
+				}
+</script>
+	
+<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+</script>
 </body>
 
 </html>
