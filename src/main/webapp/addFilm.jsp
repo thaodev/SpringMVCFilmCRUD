@@ -150,27 +150,27 @@ required
 				<label>Special Features</label>
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						name="features" value="Trailers" id="flexCheckDefault">
+						name="features" value="Trailers" id="cbox1">
 					<label class="form-check-label" for="flexCheckDefault">
 						Trailers </label>
 				</div>
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						name="features" value="Commentaries" id="flexCheck2"
+						name="features" value="Commentaries" id="cbox2"
 						checked> <label class="form-check-label" for="flexCheck2">
 						Commentaries </label>
 				</div>
 
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						name="features" value="Deleted Scences" id="flexCheck3"
+						name="features" value="Deleted Scenes" id="cbox3"
 						checked> <label class="form-check-label" for="flexCheck3">
-						Deleted Scences </label>
+						Deleted Scenes </label>
 				</div>
 
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="checkbox"
-						name="features" value="Deleted Scences" id="flexCheck4"
+						name="features" value="Behind the Scenes" id="cbox4"
 						checked> <label class="form-check-label" for="flexCheck4">
 						Behind the Scenes </label>
 				</div>
