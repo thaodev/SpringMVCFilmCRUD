@@ -2,9 +2,9 @@
 
 ###Team
 
-* Joseph Marulli
-* Ryan Prime
 * Thao Nguyen
+* Ryan Prime
+* Joseph Marulli
 
 ## Overview
 
@@ -20,9 +20,12 @@ This website operates using index.html combined with Gradle to show a homepage w
 
 * Java
 * Spring MVC
-* SQL, MySQL
+* MySQL
 * JDBC
-* Boostraps
+* HTML
+* CSS
+* Bootstrap
+* Javascript
 
 ## Lessons Learned
 
@@ -34,7 +37,12 @@ This website operates using index.html combined with Gradle to show a homepage w
 ##### - Teamwork
 
 
-### Joe:...
+#### Joe:
+##### - Debugging is best done incrementally, addressing just one facet at a time.
+##### - Push to Github after each logical and successful unit of work.
+##### - A project can get complex quickly. Good organization and cleanliness are important.
+##### - Keep trying. Most solutions can be found. They just may cost you headaches and frustration.
+##### - A good team can accomplish a lot (and can make an arduous process feel less arduous).
 
 #### Ryan: 
 #####Seeing this project from the big picture was a major weakness for me. After trying to figure out where a beginning was, I discovered that it didn't matter so much where I began, but only that each part of the objective was created and linked together. 
