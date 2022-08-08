@@ -34,16 +34,15 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	public Actor createActor(Actor actor) {
 		Actor actorAdded = actor;
-		String sql = "INSERT INTO actor (id, first_name, last_name)" + " VALUES(?, ?, ?)";
+		String sql = "INSERT INTO actor (first_name, last_name)" + " VALUES(?, ?)";
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, actor.getId());
-			stmt.setString(2, actor.getFirstName());
-			stmt.setString(3, actor.getLastName());
+			stmt.setString(1, actor.getFirstName());
+			stmt.setString(2, actor.getLastName());
 
 			int updateCount = stmt.executeUpdate();
 			System.out.println(updateCount + " film created.");
@@ -58,6 +57,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actorAdded.setId(keys.getInt(1));
 				conn.commit();
 				System.out.println("" + actorAdded.getId() + "' added.");
+				System.out.println("" + actorAdded.getFirstName() + "' added.");
+				System.out.println("" + actorAdded.getLastName() + "' added.");
 				return actorAdded;
 			} else {
 				System.out.println("Error: " + updateCount + " actor added.");
