@@ -38,14 +38,31 @@
 	<div class="container-fluid text-center">
 		<c:choose>
 			<c:when test="${empty actorAdded }">
-			<img src="sad.jpeg"/>
+			<img id="resultImg" alt="tragedy"/>
 				<p >Actor not added</p>
 			</c:when>
 			<c:otherwise>
+			<img id="resultImg" alt="joy"/>
 				<p style="font-size:40px">Actor added successfully &#128579</p>
 			</c:otherwise>
 		</c:choose>
 	</div>
+	
+		<script>
+			window.addEventListener('load', loadImg);
+
+			function loadImg() {
+  				var imageElement = document.getElementById('resultImg');
+  				const url = "https://api.unsplash.com/photos/random?query=" + imageElement.alt.replace(/ /g, "+") + "&client_id=yp_PY-Nzr42qXpkFPOmRWgecEs4-guyD3mM42yiyT9o";
+   				fetch(url)
+        			.then(response => {
+            			return response.json();
+       					})
+        			.then(data => {
+                        imageElement.src = data.urls.thumb;
+                    	});
+				}
+	</script>
 	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
