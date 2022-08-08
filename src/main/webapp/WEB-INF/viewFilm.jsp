@@ -119,9 +119,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm"></div>
-						<div class="col-sm"></div>
-						<div class="col-sm d-flex flex-row float-left" class="mr-3">
-							<div style="margin-right: 5px">
+						<div class="col-sm text-center d-flex flex-row float-left" class="mr-3">
+							<div style="margin-right: 10px">
 								<form action="deleteFilm.do" method="POST">
 									<input type="hidden" name="filmId"
 										value="<c:out value="${film.id }"/>" />
