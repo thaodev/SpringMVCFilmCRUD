@@ -34,6 +34,59 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 	}
 
+	public Actor createActor(Actor actor) {
+		Actor actorAdded = actor;
+		String sql = "INSERT INTO actor (id, first_name, last_name)" + " VALUES(?, ?, ?)";
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, actor.getId());
+			stmt.setString(2, actor.getFirstName());
+			stmt.setString(3, actor.getLastName());
+
+			int updateCount = stmt.executeUpdate();
+			System.out.println(updateCount + " film created.");
+			// Now get the auto-generated actor ID:
+
+			if (updateCount == 1) {
+				ResultSet keys = stmt.getGeneratedKeys();
+				if (keys.next()) {
+					System.out.println("New Actor: " + keys.getInt(1));
+				}
+//				ResultSet keyList = stmt.getGeneratedKeys();
+				actorAdded.setId(keys.getInt(1));
+				conn.commit();
+				System.out.println("" + actorAdded.getId() + "' added.");
+				return actorAdded;
+			} else {
+				System.out.println("Error: " + updateCount + " actor added.");
+				conn.rollback();
+			}
+		} catch (SQLException sqle1) {
+			sqle1.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.out.println("Error: Unable to roll back transaction.");
+					sqle2.printStackTrace();
+				}
+			}
+
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return actor;
+	}
+
 	// CREATE
 	public Film createFilm(Film film) {
 		Film filmAdded = film;
@@ -52,8 +105,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			stmt.setString(2,
 					film.getDescription().length() == 0 || film.getDescription() == null ? "" : film.getDescription());
-			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022
-					: film.getReleaseYear());
+			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022 : film.getReleaseYear());
 
 			stmt.setInt(4, film.getLanguageId());
 
@@ -79,8 +131,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			int updateCount = stmt.executeUpdate();
 			System.out.println(updateCount + " film created.");
 			// Now get the auto-generated actor ID:
-			
-			
+
 			if (updateCount == 1) {
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
@@ -119,12 +170,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	// READ
 	@Override
 	public Film findFilmById(int filmId) {
-		String sql = "SELECT film.*, language.name, category.name "
-				+ "FROM film "
+		String sql = "SELECT film.*, language.name, category.name " + "FROM film "
 				+ "LEFT JOIN language ON film.language_id = language.id "
 				+ "LEFT JOIN film_category ON film.id = film_category.film_id "
-				+ "LEFT JOIN category ON film_category.category_id = category.id "
-				+ "WHERE film.id = ?";
+				+ "LEFT JOIN category ON film_category.category_id = category.id " + "WHERE film.id = ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -142,10 +191,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setLength(rs.getShort("length"));
 				film.setReplacementCost(rs.getBigDecimal("replacement_cost"));
 				film.setRating(rs.getString("rating"));
-				film.setSpecialFeatures(rs.getString("special_features") == null ? "" : rs.getString("special_features"));
+				film.setSpecialFeatures(
+						rs.getString("special_features") == null ? "" : rs.getString("special_features"));
 				film.setCast(this.findActorsByFilmId(filmId));
 				film.setInventory(this.getFilmInventory(filmId));
-				
+
 				return film;
 			}
 		} catch (SQLException sqle) {
@@ -158,8 +208,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	@Override
 	public Map<Integer, String> findFilmByKeyword(String keyword) {
 		Map<Integer, String> films = new HashMap<Integer, String>();
-		String sql = "SELECT id, title"
-				+ " FROM film"
+		String sql = "SELECT id, title" + " FROM film"
 				+ " WHERE UPPER(film.title) LIKE UPPER(?) OR UPPER(film.description) LIKE UPPER(?)";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
@@ -243,21 +292,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return null;
 	}
-	
+
 	// UPDATE
 	public boolean updateFilm(Film film) {
-		String sql = "UPDATE film "
-					+ "SET title = ?, "
-						+ "description = ?, "
-						+ "release_year = ?, "
-						+ "language_id = ?,"
-						+ "rental_duration = ?, "
-						+ "rental_rate = ?, "
-						+ "length = ?, "
-						+ "replacement_cost = ?, "
-						+ "rating = ?, "
-						+ "special_features = ? "
-					+ "WHERE id = ?";
+		String sql = "UPDATE film " + "SET title = ?, " + "description = ?, " + "release_year = ?, "
+				+ "language_id = ?," + "rental_duration = ?, " + "rental_rate = ?, " + "length = ?, "
+				+ "replacement_cost = ?, " + "rating = ?, " + "special_features = ? " + "WHERE id = ?";
 		System.out.println(sql);
 		Connection conn = null;
 		try {
@@ -273,8 +313,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 //			stmt.setInt(3, film.getReleaseYear() == null || film.getReleaseYear().getYear() == 0 ? 2022
 //					: film.getReleaseYear().getYear());
-			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022
-					: film.getReleaseYear());
+			stmt.setInt(3, film.getReleaseYear() == 0 ? 2022 : film.getReleaseYear());
 
 			stmt.setInt(4, film.getLanguageId());
 
@@ -292,13 +331,13 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			stmt.setString(10, film.getSpecialFeatures() == null || film.getSpecialFeatures().length() == 0 ? ""
 					: film.getSpecialFeatures());
-			
+
 			stmt.setInt(11, film.getId());
 
 			int updateCount = stmt.executeUpdate();
 			System.out.println(stmt);
 			System.out.println(updateCount + " film updated.");
-			
+
 			return true;
 
 		} catch (SQLException sqle) {
@@ -313,15 +352,15 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return false;
 	}
-	
+
 	// DELETE
 	public boolean deleteFilmById(int filmId) {
 		String sql = "DELETE FROM film WHERE id = ?";
-		
+
 		try (Connection conn = DriverManager.getConnection(URL, user, pass)) {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
-			
+
 			int numRowsDeleted = 0;
 			numRowsDeleted = stmt.executeUpdate();
 			if (numRowsDeleted > 0) {

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.DatabaseAccessor;
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 @Controller
@@ -50,6 +51,25 @@ public class FilmController {
 		return mv;
 
 	}
+	
+	@RequestMapping (path = "addFilm.do", method = RequestMethod.POST)
+	public ModelAndView addActor (Actor actor, RedirectAttributes redir) {
+		actor = dba.createActor(actor);
+		ModelAndView mv = new ModelAndView();
+		redir.addFlashAttribute("actorAdded", actor);
+		mv.setViewName("redirect: filmCreated.do");
+		return mv;
+		
+	}
+	@RequestMapping(path = "actorCreated.do", // mapping to handle Redirect
+			method = RequestMethod.GET)
+	public ModelAndView ActorCreated(Actor actorAdded) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("actorAddedresult");
+		return mv;
+	}
+
+	
 
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
