@@ -1,7 +1,8 @@
 package com.skilldistillery.film.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -21,7 +22,18 @@ public class Film {
 	Map<String, Set<Integer>> inventory;
 
 	public Film() {
-
+		this.description = "";
+		this.releaseYear = 0;
+		this.language = "";
+		this.category = "";
+		this.rentalDuration = 0;
+		this.rentalRate = BigDecimal.valueOf(0);
+		this.length = Short.parseShort("0");
+		this.replacementCost = BigDecimal.valueOf(0);
+		this.rating = "";
+		this.specialFeatures = "";
+		this.cast = new ArrayList<Actor>();
+		this.inventory = new HashMap<String, Set<Integer>>();
 	}
 
 	/**
@@ -58,12 +70,14 @@ public class Film {
 	}
 	
 	public Film(String title, String description, short languageId) {
+		this();
 		this.title = title;
 		this.description = description;
 		this.languageId = languageId;
 	}
 	
 	public Film(int id, String title, short languageId) {
+		this();
 		this.id = id;
 		this.title = title;
 		this.languageId = languageId;
