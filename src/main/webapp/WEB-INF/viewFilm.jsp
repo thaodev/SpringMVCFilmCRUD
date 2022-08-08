@@ -114,6 +114,7 @@
 							<button type="submit" class="btn btn-info mr-5">Delete</button>
 						</form>
 					</div>
+					<div><input type="hidden" /></div>
 					<div >
 						<form action="presentFilmForUpdate.do" method="GET">
 							<input type="hidden" name="filmId"

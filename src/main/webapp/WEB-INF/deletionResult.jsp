@@ -42,7 +42,8 @@
 			<p style="font-size: 40px">Film successfully deleted &#128520</p>
 		</c:when>
 		<c:otherwise>
-			<p style="font-size: 40px">Deletion unsuccessful &#128529</p>
+			<p style="font-size: 40px">Deletion unsuccessful  &#128529</p>
+			<p style="font-style: italic">You are trying to delete a parent row referenced in another table.</p>
 		</c:otherwise>
 	</c:choose>
 	</div>

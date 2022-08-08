@@ -46,6 +46,9 @@ required
 		<div class="text-center">
 			<h1>ADD A FILM INTO DATABASE</h1>
 		</div>
+		<div class="float-left">
+			<p style="font-style: italic">* indicates the field required to be filled out</p>
+		</div>
 		<form action="addFilm.do" method="POST">
 			<div class="form-group">
 				<label for="title">Title*</label> <input type="text"
