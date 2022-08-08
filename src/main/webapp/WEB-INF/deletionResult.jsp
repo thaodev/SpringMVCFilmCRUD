@@ -38,15 +38,31 @@
 	<div class="container-fluid text-center">
 	<c:choose>
 		<c:when test="${result }">
-			<img src="sad.jpeg"/>
+						<img id="resultImg" alt="tragedy"/>
 			<p style="font-size: 40px">Film successfully deleted &#128520</p>
 		</c:when>
 		<c:otherwise>
+					<img id="resultImg" alt="tragedy"/>
 			<p style="font-size: 40px">Deletion unsuccessful  &#128529</p>
 			<p style="font-style: italic">You are trying to delete a parent row referenced in another table.</p>
 		</c:otherwise>
 	</c:choose>
 	</div>
+			<script>
+			window.addEventListener('load', loadImg);
+
+			function loadImg() {
+  				var imageElement = document.getElementById('resultImg');
+  				const url = "https://api.unsplash.com/photos/random?query=" + imageElement.alt.replace(/ /g, "+") + "&client_id=yp_PY-Nzr42qXpkFPOmRWgecEs4-guyD3mM42yiyT9o";
+   				fetch(url)
+        			.then(response => {
+            			return response.json();
+       					})
+        			.then(data => {
+                        imageElement.src = data.urls.thumb;
+                    	});
+				}
+	</script>
 	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
