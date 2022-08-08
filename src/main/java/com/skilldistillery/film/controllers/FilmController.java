@@ -1,5 +1,7 @@
 package com.skilldistillery.film.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,16 +122,19 @@ public class FilmController {
 	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		System.out.println("in update film");
+		
 		boolean result = dba.updateFilm(film);
+		Film updatedFilm = dba.findFilmById(film.getId());
 		ModelAndView mv = new ModelAndView();
 		redir.addFlashAttribute("updateResult", result);
-//		mv.addObject("result", result);
+		redir.addFlashAttribute("film", updatedFilm);
 		mv.setViewName("redirect:filmUpdated.do");
 		return mv;
 	}
 	
 	@RequestMapping(path = "filmUpdated.do", method = RequestMethod.GET)
 	public ModelAndView filmUpdated(){
+		System.out.println("film is passed");
 		System.out.println("in film updated");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateFilm");
