@@ -17,6 +17,7 @@ public class FilmController {
 	@Autowired
 	private DatabaseAccessor dba;
 
+	// The following methods are listed in the order of CRUD
 	// CREATE
 	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(Film film, RedirectAttributes redir) {

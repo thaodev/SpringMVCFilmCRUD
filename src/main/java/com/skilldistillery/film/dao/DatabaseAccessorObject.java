@@ -32,6 +32,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 	}
 
+	// Methods are listed in CRUD order
+	// CREATE
 	public Actor createActor(Actor actor) {
 		Actor actorAdded = actor;
 		String sql = "INSERT INTO actor (first_name, last_name)" + " VALUES(?, ?)";
@@ -86,7 +88,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actor;
 	}
 
-	// CREATE
 	public Film createFilm(Film film) {
 		Film filmAdded = film;
 		String sql = "INSERT INTO film (title, description," + "release_year," + " language_id"
