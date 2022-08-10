@@ -16,7 +16,7 @@
 	crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="index.html">Movie Library</a>
 			<button class="navbar-toggler" type="button"
@@ -34,20 +34,49 @@
 			</div>
 		</div>
 	</nav>
+
 	<div class="container-fluid">
-	<h2><c:out value="${numResults }"/> result<c:if test="${numResults != 1 }">s</c:if> found for search criteria '<c:out value="${criteria }"/>'</h2>
-	<table>
-		<c:forEach var="film" items="${ films}">
-			<tr>
-				<td>
-					<a href="findFilmByID.do?filmId=<c:out value="${film.key }"/>">
-						<c:out value="${film.value }"/>
-					</a>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
+		<h2>
+			<c:out value="${numResults}" /> result<c:if test="${numResults != 1}">s</c:if>
+			found for search criteria '
+			<c:out value="${criteria }" />
+			'
+		</h2>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a href="addFilm.jsp" class="btn btn-success" role="button">Add a
+				Film</a>
+
+
+			</div>
+			
+		</div>
+		<table class="table table-striped">
+			<thead>
+
+				<tr>
+					<th scope="col">Film Id</th>
+					<th scope="col">Title</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="film" items="${films}">
+
+					<tr>
+						<td><c:out value="${film.key}" /></td>
+						<td><a
+							href="findFilmByID.do?filmId=<c:out value="${film.key }"/>">
+								<c:out value="${film.value }" />
+						</a></td>
+
+					</tr>
+
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

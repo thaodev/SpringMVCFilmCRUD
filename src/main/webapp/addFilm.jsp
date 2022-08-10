@@ -47,7 +47,8 @@ required
 			<h1>ADD A FILM INTO DATABASE</h1>
 		</div>
 		<div class="float-left">
-			<p style="font-style: italic">* indicates the field required to be filled out</p>
+			<p style="font-style: italic">* indicates the field required to
+				be filled out</p>
 		</div>
 		<form action="addFilm.do" method="POST">
 			<div class="form-group">
@@ -68,7 +69,7 @@ required
 			</div>
 			<div class="form-group">
 				<label for="lang">Language*</label> <select class="form-select"
-					name="languageId"  id="lang" required
+					name="languageId" id="lang" required
 					aria-label="Default select example">
 					<!-- <option selected>Select film language</option> -->
 					<option value=""></option>
@@ -149,35 +150,34 @@ required
 			<div>
 				<label>Special Features</label>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox"
-						name="features" value="Trailers" id="cbox1">
-					<label class="form-check-label" for="flexCheckDefault">
-						Trailers </label>
+					<input class="form-check-input" type="checkbox" name="features"
+						value="Trailers" id="cbox1"> <label
+						class="form-check-label" for="flexCheckDefault"> Trailers
+					</label>
 				</div>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox"
-						name="features" value="Commentaries" id="cbox2"
-						checked> <label class="form-check-label" for="flexCheck2">
-						Commentaries </label>
+					<input class="form-check-input" type="checkbox" name="features"
+						value="Commentaries" id="cbox2" checked> <label
+						class="form-check-label" for="flexCheck2"> Commentaries </label>
 				</div>
 
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox"
-						name="features" value="Deleted Scenes" id="cbox3"
-						checked> <label class="form-check-label" for="flexCheck3">
-						Deleted Scenes </label>
+					<input class="form-check-input" type="checkbox" name="features"
+						value="Deleted Scenes" id="cbox3" checked> <label
+						class="form-check-label" for="flexCheck3"> Deleted Scenes
+					</label>
 				</div>
 
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox"
-						name="features" value="Behind the Scenes" id="cbox4"
-						checked> <label class="form-check-label" for="flexCheck4">
-						Behind the Scenes </label>
+					<input class="form-check-input" type="checkbox" name="features"
+						value="Behind the Scenes" id="cbox4" checked> <label
+						class="form-check-label" for="flexCheck4"> Behind the
+						Scenes </label>
 				</div>
-				</div>
-				
-				<input type="hidden" name="specialFeatures" value="" />
-				<script>
+			</div>
+
+			<input type="hidden" name="specialFeatures" value="" />
+			<script>
  					const cbox1 = document.getElementById('cbox1');
    					cbox1.addEventListener('change', (event) => {
       					let checkboxes = document.querySelectorAll('input[name="features"]:checked');
@@ -227,11 +227,30 @@ required
     
    							});  
 					</script>
-				<div class="text-center mt-3">
-					<button type="submit" class="btn btn-primary">Add Film</button>
-				</div>
 
-			
+			<div>
+				<form class="form-inline">
+					<div class="form-group mb-2">
+						<label for="staticEmail2" class="sr-only">Email</label> <input
+							type="text" readonly class="form-control-plaintext"
+							id="staticEmail2" value="email@example.com">
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<label for="inputPassword2" class="sr-only">Password</label> <input
+							type="password" class="form-control" id="inputPassword2"
+							placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary mb-2">Confirm
+						identity</button>
+				</form>
+
+			</div>
+
+			<div class="text-center mt-3">
+				<button type="submit" class="btn btn-primary">Add Film</button>
+			</div>
+
+
 		</form>
 
 	</div>
