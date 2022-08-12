@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -229,20 +230,31 @@ required
 					</script>
 
 			<div>
-				<form class="form-inline">
-					<div class="form-group mb-2">
-						<label for="staticEmail2" class="sr-only">Email</label> <input
-							type="text" readonly class="form-control-plaintext"
-							id="staticEmail2" value="email@example.com">
-					</div>
-					<div class="form-group mx-sm-3 mb-2">
-						<label for="inputPassword2" class="sr-only">Password</label> <input
-							type="password" class="form-control" id="inputPassword2"
-							placeholder="Password">
-					</div>
-					<button type="submit" class="btn btn-primary mb-2">Confirm
-						identity</button>
-				</form>
+				<div class="form-group">
+					<label for="actor">Actor</label> <input type="text" name="cast"
+						class="form-control" id="actor">
+				</div>
+				<c:choose>
+					<c:when test="${empty cast}">
+
+					</c:when>
+					<c:otherwise>
+						<c:forTokens items = "${cast}" delims = "; " var = "cast1st">
+							<c:set var="arrayName" value = "${fn:split(cast1st, ' ')}"/>
+						<%-- 	<c:forTokens items = "${cast1st}" delims =" " var = "castNames" varStatus ="iterator">
+								<c:set var="arrayName" value = "${castNames}"/>
+							</c:forTokens> --%>
+							<c:set var="firstName" value="${arrayName[0]}" target="${actor} }" property="firstName"/>
+							<c:set var="lastName" value="${arrayName[1]}" target="${actor} }" property="lastName"/>
+							
+							<% ArrayList l = new ArrayList() %>
+							
+						
+						
+							
+						</c:forTokens>
+					</c:otherwise>
+				</c:choose>
 
 			</div>
 
